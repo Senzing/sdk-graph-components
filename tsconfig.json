@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@senzing/sdk-graph-components": [
+        "dist/@senzing/sdk-graph-components"
+      ],
+      "@senzing/sdk-graph-components/*": [
+        "dist/@senzing/sdk-graph-components/*"
+      ]
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { SenzingSdkGraphComponentsModule} from '@senzing/sdk-graph-components';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    SenzingSdkGraphComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
