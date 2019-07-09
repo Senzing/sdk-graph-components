@@ -27,6 +27,7 @@
               "test/assets"
             ],
             "styles": [
+              "src/lib/scss/styles.scss",
               "test/styles.scss"
             ],
             "scripts": []
@@ -83,6 +84,7 @@
             "tsConfig": "test/tsconfig.spec.json",
             "karmaConfig": "test/karma.conf.js",
             "styles": [
+              "src/lib/scss/styles.scss",
               "test/styles.scss"
             ],
             "scripts": [],
@@ -134,7 +136,7 @@
         }
       }
     },
-    "sdk-graph-components": {
+    "@senzing/sdk-graph-components": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "library",

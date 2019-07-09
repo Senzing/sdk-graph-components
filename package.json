@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng build @senzing/sdk-graph-components && ng serve",
+    "build": "ng build @senzing/sdk-graph-components",
+    "watch": "rm -fR dist/@senzing/sdk-graph-components && concurrently --kill-others \"wait-on file:dist/@senzing/sdk-graph-components/public_api.d.ts && ng serve\" \"ng build @senzing/sdk-graph-components --watch\"",
     "test": "ng test",
+    "test:headless": "ng test --no-watch --watch=false --progress=false --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -19,7 +21,9 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@senzing/rest-api-client-ng": "^1.0.2",
     "core-js": "^2.5.4",
+    "d3": "^5.9.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -33,7 +37,10 @@
     "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/d3": "^5.7.1",
     "codelyzer": "~4.5.0",
+    "concurrently": "^4.1.0",
+    "fs-extra": "^7.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
@@ -47,6 +54,7 @@
     "tsickle": ">=0.29.0",
     "tslib": "^1.9.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "wait-on": "^3.2.0"
   }
 }
