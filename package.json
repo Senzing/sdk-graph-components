@@ -1,10 +1,24 @@
 {
   "name": "sdk-graph-components",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "private": false,
+  "keywords": [
+    "Angular",
+    "Library",
+    "Senzing"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Senzing/sdk-graph-components"
+  },
+  "homepage": "https://senzing.github.io/sdk-graph-components/",
   "scripts": {
     "ng": "ng",
     "start": "ng build @senzing/sdk-graph-components && ng serve",
+    "start:docs": "npx compodoc -s --port 6300 -d ./docs",
     "build": "ng build @senzing/sdk-graph-components && node build-package.js",
+    "build:docs": "npx compodoc -p src/tsconfig.lib.json -n \"Senzing SDK Graph Components\" -d ./docs --disableInternal --disablePrivate --disableDomTree --disableGraph --disableRoutesGraph --disableCoverage --disableSourceCode && node build-docs",
     "e2e": "ng e2e",
     "e2e:headless": "ng e2e --protractor-config=e2e/protractor.ci.conf.js",
     "lint": "ng lint",
@@ -14,7 +28,6 @@
     "test:headless": "ng test --no-watch --watch=false --progress=false --no-progress --karmaConfig src/karma.ci.conf.js --browsers=ChromeHeadlessCI",
     "watch": "rm -fR dist/@senzing/sdk-graph-components && concurrently --kill-others \"wait-on file:dist/@senzing/sdk-graph-components/public_api.d.ts && ng serve\" \"ng build @senzing/sdk-graph-components --watch\""
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~7.1.0",
     "@angular/common": "~7.1.0",
@@ -42,6 +55,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/d3": "^5.7.1",
     "codelyzer": "~4.5.0",
+    "@compodoc/compodoc": "^1.1.10",
     "concat": "^1.0.3",
     "concurrently": "^4.1.0",
     "fs-extra": "^7.0.1",

@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Senzing SDK Graph Components</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	      <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">Senzing SDK Graph Components</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="senzingsdk-graph-components">@senzing/sdk-graph-components</h1>
+<p><a href="https://travis-ci.com/senzingiris/sdk-components-ng"><img src="https://travis-ci.com/senzingiris/sdk-components-ng.svg?token=WxmiqA9RBhXENsrx41xE&branch=master" alt="Build Status" class="img-responsive"></a></p>
+<h2 id="overview">Overview</h2>
+<p>This project is for the Senzing&reg; Graph SDK components that can be used in other projects using Angular 7.X.X.
+It is built off of the venerable D3 graphing framework.</p>
+<h3 id="installation">Installation</h3>
+<p>Open a terminal window to the location of your project and type:
+<code>npm install @senzing/sdk-graph-components</code></p>
+<p>The components will be added to your node_modules.
+You will then want to import the module in to your angular project.</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { BrowserModule } from &#39;&#64;angular/platform-browser&#39;;
+import { NgModule } from &#39;&#64;angular/core&#39;;
+import { SenzingSdkGraphModule } from &#39;&#64;senzing/sdk-graph-components&#39;;
+
+import { AppComponent } from &#39;./app.component&#39;;
+
+&#64;NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    SenzingSdkGraphModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }</code></pre></div><h2 id="tags--usage">Tags &amp; Usage</h2>
+<p>For a full list of all available tags and parameters see the <a href="https://senzing.github.io/sdk-graph-components/">Online Documentation</a>.</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-network&gt;&lt;/sz-relationship-network&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-network-input&gt;&lt;/sz-relationship-network-input&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-network-lookup&gt;&lt;/sz-relationship-network-lookup&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-network-upload&gt;&lt;/sz-relationship-network-upload&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-path&gt;&lt;/sz-relationship-path&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-html">&lt;sz-relationship-network
+  svgWidth=2000
+  svgHeight=1000
+  port=8080
+  entityIds=&quot;1,1005&quot;
+  maxDegrees=3
+  buildOut=2
+  maxEntities=1000&gt;
+  &lt;/sz-relationship-network&gt;</code></pre></div><h2 id="dependencies">Dependencies</h2>
+<p>For building from Source:</p>
+<ul>
+<li><a href="https://nodejs.org/">Node/NPM</a>.</li>
+<li><a href="https://cli.angular.io/">Angular CLI</a></li>
+<li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
+</ul>
+<p>Please see the installation instructions for each of these for how to install and setup each one properly.</p>
+<h2 id="documentation">Documentation</h2>
+<p>Full class and module documentation can be found <a href="https://senzing.github.io/sdk-graph-components/">here</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
