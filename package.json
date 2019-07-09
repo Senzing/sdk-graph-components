@@ -6,6 +6,7 @@
     "start": "ng build @senzing/sdk-graph-components && ng serve",
     "build": "ng build @senzing/sdk-graph-components && node build-package.js",
     "e2e": "ng e2e",
+    "e2e:headless": "ng e2e --protractor-config=e2e/protractor.ci.conf.js",
     "lint": "ng lint",
     "package": "npm run build && cd ./dist/@senzing/sdk-graph-components/ && npm pack && cd ../../../",
     "publish": "cd ./dist/@senzing/sdk-graph-components/ && npm publish --access restricted",
