@@ -1,14 +1,15 @@
 import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('@senzing/sdk-graph-components: Suite 1', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('title should be "@senzing/sdk-graph-components"', async () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to sdk-graph-components!');
+    const title = await page.getTitle();
+    expect( title ).toEqual('@senzing/sdk-graph-components');
   });
 });
