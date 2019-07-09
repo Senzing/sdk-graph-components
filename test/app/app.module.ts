@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    SenzingSdkGraphModule
+    SenzingSdkGraphModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

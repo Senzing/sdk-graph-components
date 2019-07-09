@@ -4,12 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build @senzing/sdk-graph-components && ng serve",
-    "build": "ng build @senzing/sdk-graph-components",
-    "watch": "rm -fR dist/@senzing/sdk-graph-components && concurrently --kill-others \"wait-on file:dist/@senzing/sdk-graph-components/public_api.d.ts && ng serve\" \"ng build @senzing/sdk-graph-components --watch\"",
+    "build": "ng build @senzing/sdk-graph-components && node build-package.js",
+    "e2e": "ng e2e",
+    "lint": "ng lint",
+    "package": "npm run build && cd ./dist/@senzing/sdk-graph-components/ && npm pack && cd ../../../",
+    "publish": "cd ./dist/@senzing/sdk-graph-components/ && npm publish --access restricted",
     "test": "ng test",
     "test:headless": "ng test --no-watch --watch=false --progress=false --no-progress --browsers=ChromeHeadlessCI",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "watch": "rm -fR dist/@senzing/sdk-graph-components && concurrently --kill-others \"wait-on file:dist/@senzing/sdk-graph-components/public_api.d.ts && ng serve\" \"ng build @senzing/sdk-graph-components --watch\""
   },
   "private": true,
   "dependencies": {
@@ -39,6 +41,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/d3": "^5.7.1",
     "codelyzer": "~4.5.0",
+    "concat": "^1.0.3",
     "concurrently": "^4.1.0",
     "fs-extra": "^7.0.1",
     "jasmine-core": "~2.99.1",
