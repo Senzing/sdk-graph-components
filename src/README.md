@@ -1,6 +1,6 @@
 # @senzing/sdk-graph-components
 
-[![Build Status](https://travis-ci.com/senzingiris/sdk-components-ng.svg?token=WxmiqA9RBhXENsrx41xE&branch=master)](https://travis-ci.com/senzingiris/sdk-components-ng)
+[![Build Status](https://travis-ci.com/Senzing/sdk-graph-components.svg?branch=master)](https://travis-ci.com/Senzing/sdk-graph-components)
 
 ## Overview
 
