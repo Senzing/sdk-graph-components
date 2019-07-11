@@ -1,0 +1,16 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/@senzing/sdk-graph-components",
+  "lib": {
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "d3": "d3",
+      "@senzing/rest-api-client-ng": "@senzing/rest-api-client-ng"
+    }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@senzing/rest-api-client-ng",
+    "d3",
+    "@types/d3"
+  ]
+}
