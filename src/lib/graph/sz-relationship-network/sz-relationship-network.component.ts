@@ -101,7 +101,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
   private _fixDraggedNodes: boolean = true;
   /**
-   * sets whether or not to fix nodes in place after dragging. 
+   * sets whether or not to fix nodes in place after dragging.
    */
   @Input() public set fixDraggedNodes(value: boolean) { this._fixDraggedNodes = value; }
 
@@ -547,7 +547,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
   /**
    * primary data model shaper.
-   * @param resp
    */
   asGraph(resp: SzEntityNetworkResponse) : Graph {
     // @todo change from "any" to SzEntityNetworkResponse once it's fixed in the rest-api-client-ng package
