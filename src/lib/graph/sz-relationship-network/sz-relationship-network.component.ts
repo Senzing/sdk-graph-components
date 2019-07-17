@@ -16,8 +16,6 @@ import { map, tap } from 'rxjs/operators';
 })
 export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
-
-
   static readonly ICONS = {
     business: {
       shape: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z",
@@ -80,7 +78,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
   /**
    * sets the viewBox attribute on the svg element.
   */
-  @Input() public set svgViewBox(value: string){ this._svgViewBox = value; }
+  @Input() public set svgViewBox(value: string) { this._svgViewBox = value; }
   /**
    * gets the viewBox attribute on the svg element.
    */
@@ -119,13 +117,12 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     if(value && typeof value === 'string') {
       if(value && value.indexOf(',')) {
         // string array
-        const sArr = value.split(',');
-        this._entityIds = sArr;
+        this._entityIds = value.split(',');
       } else {
         // single string
         this._entityIds = [value];
       }
-    } else if(value && typeof value === 'number'){
+    } else if(value && typeof value === 'number') {
       // single number
       this._entityIds = [ value.toString() ];
     } else if(value) {
@@ -456,10 +453,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       }
     };
   }
-/**
- * Fade Rules for hovering over links
- * As currently implemented, any nodes that are connected to both source and target are not faded out.
- */
+  /**
+   * Fade Rules for hovering over links
+   * As currently implemented, any nodes that are connected to both source and target are not faded out.
+   */
   linkFade(opacity) {
     const isConnectedLocal = this.isConnected.bind(this);
     return d => {
@@ -556,7 +553,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
   /**
    * primary data model shaper.
-   * @param data
+   * @param resp
    */
   asGraph(resp: SzEntityNetworkResponse) : Graph {
     // @todo change from "any" to SzEntityNetworkResponse once it's fixed in the rest-api-client-ng package
@@ -574,7 +571,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     const primaryEntities = this._entityIds.map( parseInt );
 
     // Identify queried nodes and the nodes and links that connect them.
-    entityPaths.forEach( (entPath, ind) => {
+    entityPaths.forEach( (entPath) => {
       if (!queriedEntityIds.includes(entPath.startEntityId)) {
         queriedEntityIds.push(entPath.startEntityId);
       }
@@ -583,7 +580,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       }
 
       const pathIds = entPath.entityIds;
-      const nodeCount = pathIds.length;
       pathIds.forEach( (pEntId) => {
         if (!coreEntityIds.includes(pEntId)) {
           coreEntityIds.push(pEntId);
@@ -664,11 +660,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       });
     });
 
-    /*console.log('SzRelationshipNetworkGraph.entitiesData: ', {
-      nodes: nodes,
-      links: links
-    });*/
-
     // GRAPH CONSTRUCTED
     return {
       nodes: nodes,
@@ -686,14 +677,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
   static getIconType(resolvedEntity) {
     let retVal = 'default';
-    if(resolvedEntity && resolvedEntity.records){
-      resolvedEntity.records.slice(0,9).forEach(element => {
-        if(element.nameOrg || (element.addressData && element.addressData.some((addr) => { return addr.indexOf('BUSINESS') > -1; }))) {
-          retVal = 'business'
+    if(resolvedEntity && resolvedEntity.records) {
+      resolvedEntity.records.slice(0, 9).forEach(element => {
+        if(element.nameOrg || (element.addressData && element.addressData.some((addr) => addr.indexOf('BUSINESS') > -1))) {
+          retVal = 'business';
         } else if(element.gender && (element.gender === 'FEMALE' || element.gender === 'F') ) {
-          retVal = 'userFemale'
+          retVal = 'userFemale';
         } else if(element.gender && (element.gender === 'MALE' || element.gender === 'M') ) {
-          retVal = 'userMale'
+          retVal = 'userMale';
         }
       });
     }
