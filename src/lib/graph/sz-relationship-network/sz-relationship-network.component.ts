@@ -99,13 +99,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    */
   public get svgPreserveAspectRatio() { return this._preserveAspectRatio; }
 
-  private _forceXYContinuous: boolean = false;
+  private _fixDraggedNodes: boolean = true;
   /**
-   * sets whether or not to force XY gravity and node repulsion
-   * even after drag repositioning. IE node "snaps" back in to place
-   * after drag-end.
+   * sets whether or not to fix nodes in place after dragging. 
    */
-  @Input() public set forceXYContinuous(value: boolean) { this._forceXYContinuous = value; }
+  @Input() public set fixDraggedNodes(value: boolean) { this._fixDraggedNodes = value; }
 
   /** @internal */
   private _entityIds: string[];
@@ -330,6 +328,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
                     SzRelationshipNetworkComponent.ICONS["default"]["shape"])
     .attr("transform", "translate(-20,-20) scale(1.4)");
 
+    this.node.each(d => {
+      d.x = this._statWidth / 2;
+      d.y = this._statHeight / 2;
+    });
     // Add .png icons for businesses
     // TODO replace .png business icon with SVG
     /*
@@ -347,21 +349,13 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     */
 
     // Define the simulation with nodes, forces, and event listeners.
-    if(this._forceXYContinuous) {
-      this.forceSimulation = d3.forceSimulation(graph.nodes)
+
+    this.forceSimulation = d3.forceSimulation(graph.nodes)
       .force('link', d3.forceLink().links(graph.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
       .force('charge', d3.forceManyBody().strength(-30)) // nodes repel each other
-      .force('center', d3.forceCenter(this._statWidth / 2, this._statHeight / 2)) // Make all nodes start near the center of the SVG
-      .force('x', d3.forceX(this._statWidth / 2).strength(0.01)) // x and y continually pull all nodes toward a point.  If the
-      .force('y', d3.forceY(this._statHeight / 2).strength(0.01)) //  graph has multiple networks, this keeps them on screen
+      .force('x', d3.forceX(this._statWidth / 2).strength(0.05)) // x and y continually pull all nodes toward a point.  If the
+      .force('y', d3.forceY(this._statHeight / 2).strength(0.05)) //  graph has multiple networks, this keeps them on screen
       .on('tick', this.tick.bind(this));
-    } else {
-      this.forceSimulation = d3.forceSimulation(graph.nodes)
-      .force('link', d3.forceLink().links(graph.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
-      .force('charge', d3.forceManyBody().strength(-10)) // nodes repel each other
-      .force('center', d3.forceCenter(this._statWidth / 2, this._statHeight / 2)) // Make all nodes start near the center of the SVG
-      .on('tick', this.tick.bind(this));
-    }
 
     // Make the tooltip visible when mousing over nodes.  Fade out distant nodes
     this.node.on('mouseover.tooltip', function (d) {
@@ -534,15 +528,15 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    */
   dragended() {
     if (!d3.event.active) this.forceSimulation.alphaTarget(0);
-    if(this._forceXYContinuous) {
-      // nodes snap back in to place
-      d3.event.subject.fx = null;
-      d3.event.subject.fy = null;
-    } else {
+    if (this._fixDraggedNodes) {
       // nodes once dragged stay where you put them
       // elegant compromise
       d3.event.subject.fx = d3.event.subject.x;
       d3.event.subject.fy = d3.event.subject.y;
+    } else {
+      // nodes snap back in to place
+      d3.event.subject.fx = null;
+      d3.event.subject.fy = null;
     }
   }
 
