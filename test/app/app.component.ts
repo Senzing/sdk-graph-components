@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'sdk-graph-components';
+
+  public onContextMenuClick(event: any) {
+    console.log('Context Menu Click for: ', event);
+  }
 }

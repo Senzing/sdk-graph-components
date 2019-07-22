@@ -2,4 +2,5 @@
   <svg data-html2canvas-ignore #graphEle class="graph-chart"
   [attr.viewBox]="this.svgViewBox"
   [attr.preserveAspectRatio]="this.svgPreserveAspectRatio"
+  (contextmenu)="onRightClick($event)"
   ></svg>

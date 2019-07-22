@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, HostBinding, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import { Graph, NodeInfo, LinkInfo } from './graph-types';
 import { Simulation } from 'd3-force';
@@ -160,6 +160,20 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    * return the raw data node in the payload
    */
   static readonly WITH_RAW: boolean = true;
+
+  /**
+   * nulls out the browser right click menu
+   * @param event
+   */
+  public onRightClick(event: any) {
+    return false;
+  }
+
+  /**
+   * emitted when the player right clicks a entity node.
+   * @returns object with various entity and ui properties.
+   */
+  @Output() contextMenuClick: EventEmitter<any> = new EventEmitter<any>();
 
   node;
   nodeLabel;
@@ -366,17 +380,18 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY + 10) + "px");
     })
-      .on('mouseover.fade', this.fade(0.1).bind(this))
-      .on("mouseout.tooltip", function () {
-        tooltip.transition()
-          .duration(100)
-          .style("opacity", 0);
-      })
-      .on('mouseout.fade', this.fade(1).bind(this))
-      .on("mousemove", function () {
-        tooltip.style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY + 10) + "px");
-      });
+    .on('mouseover.fade', this.fade(0.1).bind(this))
+    .on("mouseout.tooltip", function () {
+      tooltip.transition()
+        .duration(100)
+        .style("opacity", 0);
+    })
+    .on('mouseout.fade', this.fade(1).bind(this))
+    .on("mousemove", function () {
+      tooltip.style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY + 10) + "px");
+    })
+    .on('contextmenu', this.onNodeContextClick.bind(this));
 
     // Make the tooltip visible when mousing over links.  Fade out distant nodes
     this.link.on('mouseover.fade', this.linkFade(0.1).bind(this))
@@ -426,6 +441,16 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     return this.linkedByNodeIndexMap[`${a.index},${b.index}`] ||
       this.linkedByNodeIndexMap[`${b.index},${a.index}`] ||
       a.index === b.index;
+  }
+
+  /**
+   * handler for when a entity node is right clicked.
+   * proxies to synthetic event "contextMenuClick"
+   * @param event
+   */
+  onNodeContextClick(event: any) {
+    this.contextMenuClick.emit(event);
+    return false;
   }
 
   /**
