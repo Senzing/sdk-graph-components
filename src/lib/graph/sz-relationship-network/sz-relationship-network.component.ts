@@ -175,6 +175,18 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    */
   @Output() contextMenuClick: EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * emitted when the player clicks a entity node.
+   * @returns object with various entity and ui properties.
+   */
+  @Output() entityClick: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * emitted when the user dbl-clicks a entity node.
+   * @returns object with various entity and ui properties.
+   */
+  @Output() entityDblClick: EventEmitter<any> = new EventEmitter<any>();
+
   node;
   nodeLabel;
   link;
@@ -391,6 +403,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       tooltip.style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY + 10) + "px");
     })
+    .on('click', this.onNodeClick.bind(this))
+    .on('dblclick', this.onNodeDblClick.bind(this))
     .on('contextmenu', this.onNodeContextClick.bind(this));
 
     // Make the tooltip visible when mousing over links.  Fade out distant nodes
@@ -443,6 +457,23 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       a.index === b.index;
   }
 
+  /**
+   * handler for when a entity node is clicked.
+   * proxies to synthetic event "entityClick"
+   * @param event
+   */
+  onNodeClick(event: any) {
+    this.entityClick.emit(event);
+  }
+  /**
+   * handler for when a entity node is double clicked.
+   * proxies to synthetic event "entityDblClick"
+   * @param event
+   */
+  onNodeDblClick(event: any) {
+    this.entityDblClick.emit(event);
+    return false;
+  }
   /**
    * handler for when a entity node is right clicked.
    * proxies to synthetic event "contextMenuClick"
