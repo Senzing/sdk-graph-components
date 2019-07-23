@@ -1,6 +1,6 @@
 {
   "name": "sdk-graph-components",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "keywords": [
     "Angular",
@@ -17,6 +17,7 @@
     "ng": "ng",
     "start": "ng build @senzing/sdk-graph-components && ng serve",
     "start:docs": "npx compodoc -s --port 6300 -d ./docs",
+    "start:server": "java -jar \"../senzing-api-server/target/senzing-api-server-1.6.1.jar\" -httpPort 8080 -bindAddr all -iniFile \"%LOCALAPPDATA%\\Senzing\\Workbench\\project_1\\g2.ini\" -allowedOrigins \"*\"",
     "build": "ng build @senzing/sdk-graph-components && node build-package.js",
     "build:docs": "npx compodoc -p src/tsconfig.lib.json -n \"Senzing SDK Graph Components\" -d ./docs --disableInternal --disablePrivate --disableDomTree --disableGraph --disableRoutesGraph --disableCoverage --disableSourceCode && node build-docs",
     "e2e": "ng e2e",
