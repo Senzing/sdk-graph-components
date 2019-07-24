@@ -39,14 +39,29 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       enclosed: "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
     }
   };
+  // assigned during render phase to D3 selector groups
+  private svg: any;
+  private linkGroup: any;
 
   @ViewChild('graphEle') svgComponent;
   public svgElement: SVGSVGElement;
 
-  private _showLinkLabels: any = false;
-  @Input() public set showLinkLabels(value: boolean) {this._showLinkLabels = value; }
-  public get showLinkLabels(): boolean { return this._showLinkLabels; }
-
+  private _showLinkLabels: boolean = false;
+  @Input() public set showLinkLabels(value: boolean) {
+    this._showLinkLabels = value;
+    if(value && this.linkLabel) {
+      this.linkLabel.style("opacity", 1);
+      // console.log('@senzing/sdk-graph-components:sz-relationship-network.setShowLinkLabels: ', value, 1);
+    } else if(this.linkLabel) {
+      this.linkLabel.style("opacity", 0);
+      // console.log('@senzing/sdk-graph-components:sz-relationship-network.setShowLinkLabels: ', value, 0);
+    } else {
+      // console.log('@senzing/sdk-graph-components:sz-relationship-network.setShowLinkLabels: UNKNOWN!', this._showLinkLabels, this.linkLabel);
+    }
+  }
+  public get showLinkLabels(): boolean {
+    return this._showLinkLabels;
+  }
 
   /**
    * arbitrary value just for drawing
@@ -112,20 +127,37 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    * Set the entityIds of the src entities to do discovery search around.
    */
   @Input() set entityIds(value: string | number | number[]) {
+    let _changed = false;
     if(value && typeof value === 'string') {
       if(value && value.indexOf(',')) {
         // string array
+        _changed = this._entityIds != value.split(',');
         this._entityIds = value.split(',');
       } else {
         // single string
+        _changed = this._entityIds != [value];
         this._entityIds = [value];
       }
     } else if(value && typeof value === 'number') {
       // single number
+      _changed = this._entityIds != [ value.toString() ];
       this._entityIds = [ value.toString() ];
     } else if(value) {
       // the only other thing it could be is number[]
+      _changed = this._entityIds != value.toString().split(',');
       this._entityIds = value.toString().split(',');
+    }
+    //console.log('sdk-graph-components/sz-relationship-network.component: entityIds setter( '+_changed+' )', this._entityIds);
+    if (_changed && this.svg) {
+      /*
+      console.warn('sdk-graph-components/sz-relationship-network.component: re-render graph! )', this._entityIds);
+      TODO: get this to work. relates to issue #6
+      this.removeSvg();
+      this.getNetwork().pipe(
+        map(this.asGraph.bind(this)),
+        tap( (gdata: Graph) => { console.log('SzRelationshipNetworkGraph: g1 = ', gdata); })
+      ).subscribe( this.addSvg.bind(this) );
+      */
     }
   }
 
@@ -215,7 +247,9 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     if(this._entityIds) {
       this.getNetwork().pipe(
         map(this.asGraph.bind(this)),
-        tap( (gdata: Graph) => { console.log('SzRelationshipNetworkGraph: g1 = ', gdata); })
+        tap( (gdata: Graph) => {
+          console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
+        })
       ).subscribe( this.addSvg.bind(this) );
     }
   }
@@ -238,13 +272,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
 
   /** render svg elements from graph data */
   addSvg(graph: Graph, parentSelection = d3.select("body")) {
+    // console.warn('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
     const tooltip = parentSelection
       .append("div")
       .attr("class", "sz-graph-tooltip")
       .style("opacity", 0);
 
     // Add the SVG to the HTML body
-    const svg = d3.select( this.svgElement );
+    this.svg = d3.select( this.svgElement );
 
     /*
      * If you're unfamiliar with selectors acting like a join (starting in d3.v4), here's where things may be confusing.
@@ -259,32 +294,34 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
      */
 
     // Add link groups (line + label)
-    const linkGroup = svg.selectAll('.sz-graph-link')
+    this.linkGroup = this.svg.selectAll('.sz-graph-link')
       .data(graph.links)
       .enter();
 
     // Add the lines, except we're not defining how they're drawn here.  That happens in tick()
-    this.link = linkGroup.append('path')
+    this.link = this.linkGroup.append('path')
       .attr('class', d => d.isCoreLink ? 'sz-graph-core-ink' : 'sz-graph-link')
       .attr('id', d => d.id); // This lets SVG know which label goes with which line
 
     // Add link labels
-    if (this.showLinkLabels) {
-      // TODO Append link labels after initialization on showLinkLabels change.
-      this.linkLabel = linkGroup.append('svg:text')
-        .attr('text-anchor', 'middle')
-        .attr('class', 'sz-graph-link-label')
-        .attr('dy', -3)
-        .append('textPath')
-        .attr('class', d => d.isCoreLink ? 'sz-graph-core-link-text' : 'sz-graph-link-text')
-        .attr('startOffset', '50%')
-        .attr('xlink:href', d => '#' + d.id) // This lets SVG know which label goes with which line
-        .text(d => d.matchKey);
+    this.linkLabel = this.linkGroup.append('svg:text')
+      .attr('text-anchor', 'middle')
+      .attr('class', 'sz-graph-link-label')
+      .attr('dy', -3)
+      .append('textPath')
+      .attr('class', d => d.isCoreLink ? 'sz-graph-core-link-text' : 'sz-graph-link-text')
+      .attr('startOffset', '50%')
+      .attr('xlink:href', d => '#' + d.id) // This lets SVG know which label goes with which line
+      .text(d => d.matchKey);
+
+    // show or hide link labels based on input state
+    if(!this.showLinkLabels) {
+      this.linkLabel.style("opacity", 0);
     }
 
     // Add Nodes.  Adding the nodes after the links is important, because svg doesn't have a z axis.  Later elements are
     //   drawn on top of earlier elements.
-    this.node = svg.selectAll('.sz-graph-node')
+    this.node = this.svg.selectAll('.sz-graph-node')
       .data(graph.nodes)
       .enter().append('g')
       .attr('class', 'sz-graph-node');
