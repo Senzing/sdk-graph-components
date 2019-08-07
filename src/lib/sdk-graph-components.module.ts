@@ -63,6 +63,11 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
   providers: [
     SzGraphTestService
   ],
+  /** for components being exported as web components */
+  entryComponents: [
+    SzRelationshipNetworkComponent,
+    SzRelationshipPathComponent
+  ],
   exports: [
     SzGraphTestComponent,
     SzRelationshipNetworkComponent,
