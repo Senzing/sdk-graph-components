@@ -23,7 +23,7 @@
     "e2e": "ng e2e",
     "e2e:headless": "ng e2e --protractor-config=e2e/protractor.ci.conf.js",
     "lint": "ng lint",
-    "package": "npm run build && cd ./dist/@senzing/sdk-graph-components/ && npm pack && cd ../../../",
+    "package": "cd ./dist/@senzing/sdk-graph-components/ && npm pack && cd ../../../",
     "publish": "cd ./dist/@senzing/sdk-graph-components/ && npm publish --access public",
     "test": "ng test",
     "test:headless": "ng test --no-watch --watch=false --progress=false --no-progress --karmaConfig src/karma.ci.conf.js --browsers=ChromeHeadlessCI",

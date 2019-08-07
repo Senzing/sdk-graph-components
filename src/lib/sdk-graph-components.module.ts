@@ -14,6 +14,7 @@ import {
 
 /** services */
 import { SzGraphTestService } from './services/graph-test.service';
+import { SzGraphConfigurationService } from './services/graph-configuration.service';
 
 /** components */
 import { SzGraphTestComponent } from './graph-test/graph-test.component';
@@ -61,7 +62,8 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
     ApiModule
   ],
   providers: [
-    SzGraphTestService
+    SzGraphTestService,
+    SzGraphConfigurationService
   ],
   /** for components being exported as web components */
   entryComponents: [
