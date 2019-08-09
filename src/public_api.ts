@@ -7,6 +7,7 @@ export { SenzingSdkGraphModule } from './lib/sdk-graph-components.module';
 
 /** services */
 export { SzGraphTestService } from './lib/services/graph-test.service';
+export { SzGraphConfigurationService } from './lib/services/graph-configuration.service';
 
 /** components */
 export * from './lib/graph/sz-relationship-network/sz-relationship-network.component';
