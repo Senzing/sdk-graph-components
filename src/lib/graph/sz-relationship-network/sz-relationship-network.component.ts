@@ -1,9 +1,10 @@
-import { Component, Input, HostBinding, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, HostBinding, OnInit, ViewChild, AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 import { Graph, NodeInfo, LinkInfo } from './graph-types';
 import { Simulation } from 'd3-force';
 import { EntityGraphService, SzEntityNetworkResponse } from '@senzing/rest-api-client-ng';
-import { map, tap, first } from 'rxjs/operators';
+import { map, tap, first, takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 
 /**
  * Provides a SVG of a relationship network diagram via D3.
@@ -14,7 +15,9 @@ import { map, tap, first } from 'rxjs/operators';
   templateUrl: './sz-relationship-network.component.html',
   styleUrls: ['./sz-relationship-network.component.scss']
 })
-export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
+export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, OnDestroy {
+  /** subscription to notify subscribers to unbind */
+  public unsubscribe$ = new Subject<void>();
 
   static readonly ICONS = {
     business: {
@@ -39,6 +42,39 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       enclosed: "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
     }
   };
+  private _loading = false;
+  @Output() public get loading(): boolean {
+    return this._loading;
+  }
+  private _rendered = false;
+  @Output() public get rendered(): boolean {
+    return this._rendered;
+  }
+
+  /** @internal */
+  private _requestStarted: Subject<boolean> = new Subject<boolean>();
+  /** @internal */
+  private _requestComplete: Subject<boolean> = new Subject<boolean>();
+  /** @internal */
+  private _renderComplete: Subject<boolean> = new Subject<boolean>();
+
+  /**
+   * Observeable stream for the event that occurs when a network
+   * request is initiated
+   */
+  public requestStarted: Observable<boolean>;
+  /**
+   * Observeable stream for the event that occurs when a network
+   * request is completed
+   */
+  public requestComplete: Observable<boolean>;
+  /**
+   * Observeable stream for the event that occurs when a draw
+   * operation is completed
+   */
+  public renderComplete: Observable<boolean>;
+
+
   // assigned during render phase to D3 selector groups
   private svg: any;
   private linkGroup: any;
@@ -165,16 +201,17 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
    * amount of degrees of separation to populate the graph with
    */
   private _maxDegrees: number;
-  @Input() set maxDegrees(value: string) { this._maxDegrees = +value; }
-
+  @Input() set maxDegrees(value: string | number) {
+    this._maxDegrees = +value;
+  }
   private _buildOut: number;
-  @Input() set buildOut(value: string) { this._buildOut = +value; }
+  @Input() set buildOut(value: string| number) { this._buildOut = +value; }
 
   /**
    * maxiumum entities to display
    */
   private _maxEntities: number;
-  @Input() set maxEntities(value: string) { this._maxEntities = +value; }
+  @Input() set maxEntities(value: string | number) { this._maxEntities = +value; }
 
   /**
    * the space between nodes
@@ -230,6 +267,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     private graphService: EntityGraphService,
   ) {
     this.linkedByNodeIndexMap = {};
+    // set up public observable streams
+    this.requestStarted = this._requestStarted.asObservable();
+    this.requestComplete = this._requestComplete.asObservable();
+    this.renderComplete = this._renderComplete.asObservable();
   }
 
   ngOnInit() {
@@ -246,12 +287,21 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if(this._entityIds) {
       this.getNetwork().pipe(
+        takeUntil(this.unsubscribe$),
         map(this.asGraph.bind(this)),
         tap( (gdata: Graph) => {
           console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
         })
       ).subscribe( this.addSvg.bind(this) );
     }
+  }
+
+  /**
+   * unsubscribe when component is destroyed
+   */
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   /**
@@ -276,11 +326,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     this.svg.selectAll('*').remove();
 
     if(this._entityIds) {
+      this._requestStarted.next(true);
       this.getNetwork().pipe(
+        takeUntil(this.unsubscribe$),
         first(),
         map(this.asGraph.bind(this)),
         tap( (gdata: Graph) => {
           console.log('SzRelationshipNetworkGraph.reload()', gdata);
+          this._requestComplete.next(true);
         })
       ).subscribe( this.addSvg.bind(this) );
     }
@@ -482,6 +535,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
       });
 
     graph.links.forEach( this.registerLink.bind(this) );
+    // publish out event
+    this._renderComplete.next(true);
   }
 
   private registerLink(d: LinkInfo) {
