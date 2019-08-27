@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { Graph, NodeInfo, LinkInfo } from './graph-types';
 import { Simulation } from 'd3-force';
 import { EntityGraphService, SzEntityNetworkResponse } from '@senzing/rest-api-client-ng';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, first } from 'rxjs/operators';
 
 /**
  * Provides a SVG of a relationship network diagram via D3.
@@ -270,9 +270,25 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /** re-render if already loaded */
+  public reload(): void {
+    console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
+    this.svg.selectAll('*').remove();
+
+    if(this._entityIds) {
+      this.getNetwork().pipe(
+        first(),
+        map(this.asGraph.bind(this)),
+        tap( (gdata: Graph) => {
+          console.log('SzRelationshipNetworkGraph.reload()', gdata);
+        })
+      ).subscribe( this.addSvg.bind(this) );
+    }
+  }
+
   /** render svg elements from graph data */
   addSvg(graph: Graph, parentSelection = d3.select("body")) {
-    // console.warn('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
+    console.warn('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
     const tooltip = parentSelection
       .append("div")
       .attr("class", "sz-graph-tooltip")
