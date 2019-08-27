@@ -322,7 +322,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** re-render if already loaded */
   public reload(): void {
-    console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
+    // console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
     this.svg.selectAll('*').remove();
 
     if(this._entityIds) {
@@ -341,7 +341,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** render svg elements from graph data */
   addSvg(graph: Graph, parentSelection = d3.select("body")) {
-    console.warn('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
+    // console.log('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
     const tooltip = parentSelection
       .append("div")
       .attr("class", "sz-graph-tooltip")
