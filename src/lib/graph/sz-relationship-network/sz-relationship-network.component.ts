@@ -57,6 +57,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   private _requestComplete: Subject<boolean> = new Subject<boolean>();
   /** @internal */
   private _renderComplete: Subject<boolean> = new Subject<boolean>();
+  /** @internal */
+  private _requestNoResults: Subject<boolean> = new Subject<boolean>();
 
   /**
    * Observeable stream for the event that occurs when a network
@@ -73,6 +75,16 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * operation is completed
    */
   public renderComplete: Observable<boolean>;
+  /**
+   * Observeable stream for the event that occurs when a
+   * request completed but has no results
+   */
+  public requestNoResults: Observable<boolean>;
+  /**
+   * emitted when the player right clicks a entity node.
+   * @returns object with various entity and ui properties.
+   */
+  @Output() noResults: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   // assigned during render phase to D3 selector groups
@@ -271,6 +283,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     this.requestStarted = this._requestStarted.asObservable();
     this.requestComplete = this._requestComplete.asObservable();
     this.renderComplete = this._renderComplete.asObservable();
+    this.requestNoResults = this._requestNoResults.asObservable();
   }
 
   ngOnInit() {
@@ -291,6 +304,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         map(this.asGraph.bind(this)),
         tap( (gdata: Graph) => {
           console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
+          if(gdata.links.length == 0) {
+            this.noResults.emit(true);
+            this._requestNoResults.next(true);
+          }
         })
       ).subscribe( this.addSvg.bind(this) );
     }
