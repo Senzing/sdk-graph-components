@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NodeFilterPair } from '@senzing/sdk-graph-components';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,42 @@ export class AppComponent {
     // console.warn('toggleGraphMatchKeys: ', _checked);
     this.showGraphMatchKeys = _checked;
   }
+
+  public get entityNodeModifiers(): NodeFilterPair[] {
+    return [
+      { selectorFn: this.inOwners, modifierFn: this.setOwnersColor },
+      { selectorFn: this.inCompanies, modifierFn: this.setCompaniesColor }
+    ];
+  }
+
+  public get entityNodeFilters(): NodeFilterPair[] {
+    return [
+      { selectorFn: (nodeData) => {
+        return nodeData.dataSources.indexOf('SAMPLE PERSON') >= 0;
+      }}
+    ];
+  }
+
+  isInDataSource(dataSource, nodeData) {
+    // console.log('fromOwners: ', nodeData);
+    return nodeData.dataSources.indexOf(dataSource) >= 0;
+  }
+
+  public styleOwnersByClass(nodeList) {
+    nodeList.attr('class', function(d) {
+      return ['highlighted'].concat(d.relationTypeClasses).join(' ');
+    });
+  }
+
+  public setNodeFillColor(color, nodeList) {
+    // nodeList.attr('fill', '#e6b100');
+    nodeList.style('fill', color);
+  }
+
+  public inOwners = this.isInDataSource.bind(this, 'OWNERS');
+  public inCompanies = this.isInDataSource.bind(this, 'COMPANIES');
+  public setOwnersColor = this.setNodeFillColor.bind(this, '#e6b100');
+  public setCompaniesColor = this.setNodeFillColor.bind(this, '#0075e6');
 
   public onContextMenuClick(event: any) {
     console.log('Context Menu Click for: ', event);

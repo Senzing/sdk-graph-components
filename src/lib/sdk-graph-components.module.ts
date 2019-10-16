@@ -18,7 +18,7 @@ import { SzGraphConfigurationService } from './services/graph-configuration.serv
 
 /** components */
 import { SzGraphTestComponent } from './graph-test/graph-test.component';
-import { SzRelationshipNetworkComponent } from './graph/sz-relationship-network/sz-relationship-network.component';
+import { SzRelationshipNetworkComponent, NodeFilterPair } from './graph/sz-relationship-network/sz-relationship-network.component';
 import { SzRelationshipNetworkInputComponent } from './graph/sz-relationship-network-input/sz-relationship-network-input.component';
 import { SzRelationshipNetworkLookupComponent } from './graph/sz-relationship-network-lookup/sz-relationship-network-lookup.component';
 import { SzRelationshipNetworkUploadComponent } from './graph/sz-relationship-network-upload/sz-relationship-network-upload.component';

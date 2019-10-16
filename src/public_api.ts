@@ -16,6 +16,7 @@ export * from './lib/graph/sz-relationship-network-lookup/sz-relationship-networ
 export * from './lib/graph/sz-relationship-network-upload/sz-relationship-network-upload.component';
 export * from './lib/graph/sz-relationship-path/sz-relationship-path.component';
 export { SzGraphTestComponent } from './lib/graph-test/graph-test.component';
+export { NodeFilterPair as NodeFilterPair } from './lib/graph/sz-relationship-network/sz-relationship-network.component';
 
 /** models */
 export * from './lib/models/responces/search-results/sz-search-result-entity-data';

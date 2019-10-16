@@ -6,6 +6,11 @@ import { EntityGraphService, SzEntityNetworkResponse } from '@senzing/rest-api-c
 import { map, tap, first, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
+export interface NodeFilterPair {
+  selectorFn: any;
+  modifierFn?: any;
+}
+
 /**
  * Provides a SVG of a relationship network diagram via D3.
  * @export
@@ -268,6 +273,85 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    */
   @Output() entityDblClick: EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * filter to apply to graph response collection
+   */
+  private _filterFn: NodeFilterPair[];
+  private _applyFilterFn(fnPairArray: NodeFilterPair[]) {
+    const _links = this.link;
+    const _linkGroups = this.linkGroup;
+    if (fnPairArray && fnPairArray.length >= 0) {
+      if( this.node && this.node.filter) {
+        fnPairArray.forEach( (pairFn) => {
+          const _filtered = this.node.filter( pairFn.selectorFn );
+          if ( _filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
+            // first change opacity on ALL items
+            _filtered.style('opacity', 0);
+            // now apply special filter highlighter
+            pairFn.modifierFn(_filtered);
+            const _nodePaths = _filtered.select('path');
+            if ( _nodePaths ) {
+              pairFn.modifierFn(_nodePaths);
+            }
+          } else if (_filtered && pairFn && !pairFn.modifierFn) {
+            //_all.style('opacity', 0.2);
+            _filtered.style('opacity', 0);
+          }
+        });
+      }
+    }
+  }
+  private _applyModifierFn(fnPairArray: NodeFilterPair[]) {
+    if (fnPairArray && fnPairArray.length >= 0) {
+      if( this.node && this.node.filter) {
+        fnPairArray.forEach( (pairFn) => {
+          const _filtered = this.node.filter( pairFn.selectorFn );
+          if(_filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
+            pairFn.modifierFn(_filtered);
+            const _nodePaths = _filtered.select('path');
+            if ( _nodePaths ) {
+              pairFn.modifierFn(_nodePaths);
+            }
+          }
+        });
+      }
+    }
+  }
+  @Input() public set filter(fn: NodeFilterPair[] | NodeFilterPair) {
+    if((fn as NodeFilterPair).selectorFn) {
+      // is single pair, save as single item array
+      fn = [ (fn as NodeFilterPair) ];
+    }
+    this._filterFn = fn as NodeFilterPair[];
+    this._applyFilterFn(this._filterFn);
+  }
+
+   /**
+   * name label padding
+   */
+  private _highlightFn: NodeFilterPair[];
+  @Input() public set highlight(fn: NodeFilterPair[] | NodeFilterPair) {
+    if((fn as NodeFilterPair).selectorFn) {
+      // is single pair, save as single item array
+      fn = [ (fn as NodeFilterPair) ];
+    }
+    this._highlightFn = fn as NodeFilterPair[];
+    this._applyModifierFn(this._highlightFn);
+  }
+
+  /**
+   * name label padding
+   */
+  private _modifyFn: NodeFilterPair[];
+  @Input() public set modify(fn: NodeFilterPair[] | NodeFilterPair) {
+    if((fn as NodeFilterPair).selectorFn) {
+      // is single pair, save as single item array
+      fn = [ (fn as NodeFilterPair) ];
+    }
+    this._modifyFn = fn as NodeFilterPair[];
+    this._applyModifierFn(this._modifyFn);
+  }
+
   node;
   nodeLabel;
   link;
@@ -481,6 +565,19 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       d.x = this._statWidth / 2;
       d.y = this._statHeight / 2;
     });
+
+    // if there are any special node modifier functions run them
+    if( this._highlightFn || this._filterFn || this._modifyFn) {
+      // run a fn against the node list
+      if (this._filterFn && this._filterFn.length > 0) {
+        this._applyFilterFn(this._filterFn);
+      } else if(this._modifyFn && this._modifyFn.length > 0) {
+        this._applyModifierFn(this._modifyFn);
+      } else if (this._highlightFn && this._highlightFn.length > 0) {
+        this._applyModifierFn(this._filterFn);
+      }
+    }
+
     // Add .png icons for businesses
     // TODO replace .png business icon with SVG
     /*
@@ -805,7 +902,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         relationTypeClasses: relColorClasses,
         name: resolvedEntity.entityName,
         address: resolvedEntity.addressData && resolvedEntity.addressData.length > 0 ? resolvedEntity.addressData[0] : SzRelationshipNetworkComponent.firstOrNull(features, "ADDRESS"),
-        phone: resolvedEntity.phoneData && resolvedEntity.phoneData.length > 0 ? resolvedEntity.phoneData[0] : SzRelationshipNetworkComponent.firstOrNull(features, "PHONE")
+        phone: resolvedEntity.phoneData && resolvedEntity.phoneData.length > 0 ? resolvedEntity.phoneData[0] : SzRelationshipNetworkComponent.firstOrNull(features, "PHONE"),
+        dataSources: resolvedEntity.recordSummaries.map((ds) =>  ds.dataSource ),
+        recordSummaries: resolvedEntity.recordSummaries,
+        styles: []
       });
     });
 

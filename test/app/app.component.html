@@ -9,12 +9,14 @@
     <sz-graph-test-component></sz-graph-test-component>
   </div>
   <sz-relationship-network
-  svgWidth=2000
-  svgHeight=1000
+  svgWidth=100%
+  svgHeight=900
   port=8080
   entityIds="1,1005"
   maxDegrees=3
   buildOut=2
+  [filter]="entityNodeFilters"
+  [highlight]="entityNodeModifiers"
   [showLinkLabels]="showGraphMatchKeys"
   (contextMenuClick)="onContextMenuClick($event)"
   maxEntities=1000>
