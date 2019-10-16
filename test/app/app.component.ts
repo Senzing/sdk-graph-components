@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { NodeFilterPair } from '@senzing/sdk-graph-components';
+import { Component, Input, ViewChild } from '@angular/core';
+import { NodeFilterPair, SzRelationshipNetworkComponent } from '@senzing/sdk-graph-components';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,7 @@ import { NodeFilterPair } from '@senzing/sdk-graph-components';
 export class AppComponent {
   title = 'sdk-graph-components';
   @Input() public showGraphMatchKeys = false;
+  @ViewChild(SzRelationshipNetworkComponent) graph: SzRelationshipNetworkComponent;
 
   public toggleGraphMatchKeys(event): void {
     let _checked = false;
@@ -56,6 +57,16 @@ export class AppComponent {
   public inCompanies = this.isInDataSource.bind(this, 'COMPANIES');
   public setOwnersColor = this.setNodeFillColor.bind(this, '#e6b100');
   public setCompaniesColor = this.setNodeFillColor.bind(this, '#0075e6');
+
+  modifyData(evt) {
+    if ( this.graph ) {
+      this.graph.modify = {
+        selectorFn: (node) => true, // select all nodes
+        modifierFn: (data) => { data.newProp = true; return data; } // add new property
+      };
+      console.log('data after modification: ', this.graph.chartData);
+    }
+  }
 
   public onContextMenuClick(event: any) {
     console.log('Context Menu Click for: ', event);

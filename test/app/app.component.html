@@ -5,9 +5,8 @@
   [checked]="showGraphMatchKeys"
   (change)="toggleGraphMatchKeys($event)"><label for="graph-toggle-match-keys">Toggle Match Keys</label>
 
-  <div class="test-wrapper">
-    <sz-graph-test-component></sz-graph-test-component>
-  </div>
+  <div><button (click)="modifyData($event)"> add "newProp = true" to data for all matching nodes </button></div>
+
   <sz-relationship-network
   svgWidth=100%
   svgHeight=900

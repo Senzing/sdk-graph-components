@@ -312,7 +312,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // generated from filtering function
       if(_excludedIds && this.link && this.link.filter ) {
         const _linksToHide = this.link.filter( (lNode) => {
-          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0)
+          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
         });
         if(_linksToHide && _linksToHide.style) {
           try {
@@ -337,6 +337,23 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
             if ( _nodePaths ) {
               pairFn.modifierFn(_nodePaths);
             }
+          }
+        });
+      }
+    }
+  }
+  /**
+   * add or modify data to nodes that match any of the "selectorFn" functions in fnPairArray
+   * @param fnPairArray
+   */
+  private _applyDataFn(fnPairArray: NodeFilterPair[]) {
+    if (fnPairArray && fnPairArray.length >= 0) {
+      if( this.node && this.node.filter) {
+        fnPairArray.forEach( (pairFn) => {
+          const _filtered = this.node.filter( pairFn.selectorFn );
+          if(_filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
+            _filtered.datum( pairFn.modifierFn );
+            //pairFn.modifierFn(_filtered);
           }
         });
       }
@@ -376,7 +393,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * set or update a property on nodes in graph that match any
    * of the criteria set by "".
    * @example
-   * SzRelationshipNetworkComponent.modify = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (nodeList) => { nodeList.data({belongsToMyDatasource: true}); }}
+   * SzRelationshipNetworkComponent.modify = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (data) => { data.newProperty = true; return data; } }
    */
   @Input() public set modify(fn: NodeFilterPair[] | NodeFilterPair) {
     if((fn as NodeFilterPair).selectorFn) {
@@ -384,11 +401,27 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       fn = [ (fn as NodeFilterPair) ];
     }
     this._modifyFn = fn as NodeFilterPair[];
-    this._applyModifierFn(this._modifyFn);
+    this._applyDataFn(this._modifyFn);
   }
 
+  /**  the node or main selection */
+  public get chartNodes() {
+    return this.node;
+  }
+  /** the data for the nodes in this.chartNodes */
+  public get chartData() {
+    if(this.node && this.node.data) {
+      return this.node.data();
+    } else {
+      return undefined;
+    }
+  }
+
+  /** main D3 selection entity nodes */
   node;
+  /** text names that appear under entity nodes */
   nodeLabel;
+  /** main D3 selection for relationship lines */
   link;
   linkLabel;
   forceSimulation: Simulation<NodeInfo, LinkInfo>;
