@@ -274,16 +274,26 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   @Output() entityDblClick: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * filter to apply to graph response collection
+   * filtering to apply to graph response collection.
+   * only settable through "filter" setter
    */
   private _filterFn: NodeFilterPair[];
+  /**
+   * apply effect to nodes and link nodes that match any members that match
+   * any of the "selectorFn" properties in fnPairArray
+   * @param fnPairArray
+   */
   private _applyFilterFn(fnPairArray: NodeFilterPair[]) {
-    const _links = this.link;
-    const _linkGroups = this.linkGroup;
+    const _excludedIds = [];
     if (fnPairArray && fnPairArray.length >= 0) {
       if( this.node && this.node.filter) {
         fnPairArray.forEach( (pairFn) => {
           const _filtered = this.node.filter( pairFn.selectorFn );
+          // create array of filtered entityIds to compare source/target links to
+          _filtered.each( (fNode) => {
+            //console.log('what the? ', fNode);
+            _excludedIds.push( fNode.entityId );
+          });
           if ( _filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
             // first change opacity on ALL items
             _filtered.style('opacity', 0);
@@ -294,13 +304,28 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
               pairFn.modifierFn(_nodePaths);
             }
           } else if (_filtered && pairFn && !pairFn.modifierFn) {
-            //_all.style('opacity', 0.2);
             _filtered.style('opacity', 0);
           }
         });
       }
+      // hide any related "link" nodes using "_excludedIds" members
+      // generated from filtering function
+      if(_excludedIds && this.link && this.link.filter ) {
+        const _linksToHide = this.link.filter( (lNode) => {
+          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0)
+        });
+        if(_linksToHide && _linksToHide.style) {
+          try {
+            _linksToHide.style('opacity', 0);
+          } catch(err) {}
+        }
+      }
     }
   }
+  /**
+   * apply effect or styles to nodes that match any of the "selectorFn" functions in fnPairArray
+   * @param fnPairArray
+   */
   private _applyModifierFn(fnPairArray: NodeFilterPair[]) {
     if (fnPairArray && fnPairArray.length >= 0) {
       if( this.node && this.node.filter) {
@@ -317,6 +342,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       }
     }
   }
+  /**
+   * set the filters to apply to the display of nodes in graph. The default is to hide any
+   * nodes that return true when the selectorFn is called on the node.
+   */
   @Input() public set filter(fn: NodeFilterPair[] | NodeFilterPair) {
     if((fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
@@ -325,11 +354,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     this._filterFn = fn as NodeFilterPair[];
     this._applyFilterFn(this._filterFn);
   }
-
-   /**
-   * name label padding
-   */
+  /** only settable through "highlight" setter */
   private _highlightFn: NodeFilterPair[];
+  /**
+   * set a style or effect to apply to the display of nodes in graph that match any
+   * of the criteria set by "".
+   * @example
+   * SzRelationshipNetworkComponent.highlight = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (nodeList) => { nodeList.style('fill','orange'); }}
+   */
   @Input() public set highlight(fn: NodeFilterPair[] | NodeFilterPair) {
     if((fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
@@ -338,11 +370,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     this._highlightFn = fn as NodeFilterPair[];
     this._applyModifierFn(this._highlightFn);
   }
-
-  /**
-   * name label padding
-   */
+  /** only settable through "modify" setter */
   private _modifyFn: NodeFilterPair[];
+  /**
+   * set or update a property on nodes in graph that match any
+   * of the criteria set by "".
+   * @example
+   * SzRelationshipNetworkComponent.modify = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (nodeList) => { nodeList.data({belongsToMyDatasource: true}); }}
+   */
   @Input() public set modify(fn: NodeFilterPair[] | NodeFilterPair) {
     if((fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
