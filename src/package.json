@@ -1,6 +1,6 @@
 {
   "name": "@senzing/sdk-graph-components",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "dependencies": {
     "@senzing/rest-api-client-ng": "^1.0.2"
   },
