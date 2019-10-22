@@ -200,18 +200,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       _changed = this._entityIds != value.toString().split(',');
       this._entityIds = value.toString().split(',');
     }
-    //console.log('sdk-graph-components/sz-relationship-network.component: entityIds setter( '+_changed+' )', this._entityIds);
-    if (_changed && this.svg) {
-      /*
-      console.warn('sdk-graph-components/sz-relationship-network.component: re-render graph! )', this._entityIds);
-      TODO: get this to work. relates to issue #6
-      this.removeSvg();
-      this.getNetwork().pipe(
-        map(this.asGraph.bind(this)),
-        tap( (gdata: Graph) => { console.log('SzRelationshipNetworkGraph: g1 = ', gdata); })
-      ).subscribe( this.addSvg.bind(this) );
-      */
-    }
+    // console.log('sdk-graph-components/sz-relationship-network.component: entityIds setter( '+_changed+' )', this._entityIds);
   }
 
   /**
@@ -455,7 +444,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         takeUntil(this.unsubscribe$),
         map(this.asGraph.bind(this)),
         tap( (gdata: Graph) => {
-          console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
+          // console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
           if(gdata.links.length == 0) {
             this.noResults.emit(true);
             this._requestNoResults.next(true);
@@ -492,7 +481,9 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   /** re-render if already loaded */
   public reload(): void {
     // console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
-    this.svg.selectAll('*').remove();
+    if(this.svg && this.svg.selectAll) {
+      this.svg.selectAll('*').remove();
+    }
 
     if(this._entityIds) {
       this._requestStarted.next(true);
@@ -718,6 +709,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
     graph.links.forEach( this.registerLink.bind(this) );
     // publish out event
+    this._rendered = true;
     this._renderComplete.next(true);
   }
 
