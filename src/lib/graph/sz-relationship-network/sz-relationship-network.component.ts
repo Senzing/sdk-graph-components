@@ -309,6 +309,18 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
           } catch(err) {}
         }
       }
+      // hide any related match keys
+      //console.warn('filter match keys? ', _excludedIds, this.linkLabel);
+      if(_excludedIds && this.link && this.linkLabel.filter ) {
+        const _linksToHide = this.linkLabel.filter( (lNode) => {
+          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
+        });
+        if(_linksToHide && _linksToHide.style) {
+          try {
+            _linksToHide.style('opacity', 0);
+          } catch(err) {}
+        }
+      }
     }
   }
   /**
@@ -417,7 +429,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   linkedByNodeIndexMap;
 
   constructor(
-    private graphService: EntityGraphService,
+    private graphService: EntityGraphService
   ) {
     this.linkedByNodeIndexMap = {};
     // set up public observable streams
@@ -607,6 +619,25 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
                       SzRelationshipNetworkComponent.ICONS[d.iconType]["shape"] :
                       SzRelationshipNetworkComponent.ICONS["default"]["shape"])
       .attr("transform", "translate(-20,-20) scale(.080)");
+
+    // add svg mask for business so you cant click through the surface
+    // two rectangles that fill in the building path
+    this.node.filter(d => d.iconType === "business")
+      .append('rect')
+      .attr('x', 2.03)
+      .attr('y', 3.048)
+      .attr('width', 9.898)
+      .attr('height', 17.939)
+      .attr('class', 'sz-graph-business-icon-enclosure')
+      .attr("transform", "translate(-20,-20) scale(1.4)");
+    this.node.filter(d => d.iconType === "business")
+      .append('rect')
+      .attr('x', 11.966)
+      .attr('y', 7.068)
+      .attr('width', 9.974)
+      .attr('height', 13.918)
+      .attr('class', 'sz-graph-business-icon-enclosure')
+      .attr("transform", "translate(-20,-20) scale(1.4)");
 
     // Add svg icon for business (corps are not people)
     this.node.filter(d => d.iconType === "business")
