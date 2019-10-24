@@ -1,6 +1,9 @@
 # @senzing/sdk-graph-components
 
 [![Build Status](https://travis-ci.com/Senzing/sdk-graph-components.svg?branch=master)](https://travis-ci.com/Senzing/sdk-graph-components)
+[![npm version](https://badge.fury.io/js/%40senzing%2Fsdk-graph-components.svg)](https://badge.fury.io/js/%40senzing%2Fsdk-graph-components)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/senzing/sdk-graph-components?color=%2300c4ff&logo=latest%20tag)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/senzing/sdk-graph-components?color=orange&logo=latest&logoColor=blue)
 
 ## Overview
 

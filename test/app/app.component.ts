@@ -8,7 +8,7 @@ import { NodeFilterPair, SzRelationshipNetworkComponent } from '@senzing/sdk-gra
 })
 export class AppComponent {
   title = 'sdk-graph-components';
-  @Input() public showGraphMatchKeys = false;
+  @Input() public showGraphMatchKeys = true;
   @ViewChild(SzRelationshipNetworkComponent) graph: SzRelationshipNetworkComponent;
 
   public toggleGraphMatchKeys(event): void {
