@@ -1,14 +1,34 @@
-import { Component, Input, Output, HostBinding, OnInit, ViewChild, AfterViewInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, Output, HostBinding, OnInit, ViewChild, AfterViewInit, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 import { Graph, NodeInfo, LinkInfo } from './graph-types';
 import { Simulation } from 'd3-force';
-import { EntityGraphService, SzEntityNetworkResponse } from '@senzing/rest-api-client-ng';
+import { EntityGraphService, SzEntityNetworkResponse, SzEntityNetworkData } from '@senzing/rest-api-client-ng';
+import { SzNetworkGraphInputs } from '../../models/network-graph-inputs';
 import { map, tap, first, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
+
+export interface TooltipEntityModel {
+    label: string;
+    id: number;
+    orgName?: string;
+    name?: string;
+    gender?: string;
+    address: string;
+    phone: string;
+    sources: string[];
+}
+
+export interface TooltipLinkModel {
+  label: string;
+  matchKey: string;
+}
 
 export interface NodeFilterPair {
   selectorFn: any;
   modifierFn?: any;
+  selectorArgs?: any;
+  modifierArgs?: any;
 }
 
 /**
@@ -23,6 +43,9 @@ export interface NodeFilterPair {
 export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, OnDestroy {
   /** subscription to notify subscribers to unbind */
   public unsubscribe$ = new Subject<void>();
+
+  static SOURCE_LINE_CHAR_LIMIT = 27;
+  static MIN_RECORD_ID_LENGTH = 3;
 
   static readonly ICONS = {
     business: {
@@ -47,6 +70,22 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       enclosed: "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
     }
   };
+  public entityId;
+  chart: any;
+  /** whethor or not to show the tooltip */
+  tooltipShowing = false;
+  graphData: any;
+  /** tooltip data for entity hover */
+  public toolTipEntData: TooltipEntityModel;
+  /** tooltip daata for entity relationship links */
+  public toolTipLinkData: TooltipLinkModel;
+  /** data used to populate tooltip template, switched ref to either "toolTipEntData" or "toolTipLinkData" */
+  public toolTipData: TooltipEntityModel | TooltipLinkModel;
+  /** position of tooltip left relative to graph canvas */
+  public toolTipPosLeft = 0;
+  /** position of tooltip top relative to graph canvas */
+  public toolTipPosTop = 0;
+
   private _loading = false;
   @Output() public get loading(): boolean {
     return this._loading;
@@ -96,8 +135,24 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   private svg: any;
   private linkGroup: any;
 
+  // --- used for compatibility sensing
+  public isKeyLines = true;
+  public isD3 = false;
+
+  /** svg element */
   @ViewChild('graphEle') svgComponent;
-  public svgElement: SVGSVGElement;
+  public svgElement: SVGElement;
+  /** tooltip container element */
+  @ViewChild('tooltipContainer')
+  public tooltipContainer: ElementRef;
+  /** tooltip entity template */
+  @ViewChild('ttEnt') tooltipEntTemplate;
+  /** relationship link tooltip template */
+  @ViewChild('ttLink') tooltipLinkTemplate;
+  /** tooltip template switchable ref */
+  public toolTipTemplate = this.tooltipEntTemplate;
+  /** tooltip element, child element of container with absolute pos  */
+  @ViewChild('tooltip') tooltip: ElementRef;
 
   private _showLinkLabels: boolean = false;
   @Input() public set showLinkLabels(value: boolean) {
@@ -115,6 +170,18 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   public get showLinkLabels(): boolean {
     return this._showLinkLabels;
   }
+
+  private _loadedData: SzNetworkGraphInputs;
+  @Input() public set loadedData(value: SzNetworkGraphInputs) {
+    if (value === undefined || value === null) {
+      console.log("Undefined set value");
+      return;
+    }
+    //this.render(value);
+  }
+
+  /** emit "onDataLoaded" when data received and parsed */
+  @Output() public onDataLoaded: EventEmitter<SzNetworkGraphInputs> = new EventEmitter<SzNetworkGraphInputs>();
 
   /**
    * arbitrary value just for drawing
@@ -275,7 +342,23 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   private _applyFilterFn(fnPairArray: NodeFilterPair[]) {
     const _excludedIds = [];
     if (fnPairArray && fnPairArray.length >= 0) {
-      if( this.node && this.node.filter) {
+      if(this.chart && this.chart.filter) {
+        // --- start keylines filter
+        fnPairArray.forEach( (pairFn, _index) => {
+          // keylines filter actually does the filtering
+          // no need to change opacity etc
+          /** selectorFn functions look like:
+           * function myFilter(item) {
+           *   return (item.d.dataSources.indexOf('DATASOURCE 1') > -1);
+           * }
+           */
+          this.chart.filter(pairFn.selectorFn, { type: 'node' }).then( ( filterResults )=> {
+            // console.log('performed keylines filter: ', filterResults);
+          });
+        });
+        // --- end keylines filter
+      } else if( this.node && this.node.filter) {
+        // --- start D3 filter
         fnPairArray.forEach( (pairFn) => {
           const _filtered = this.node.filter( pairFn.selectorFn );
           // create array of filtered entityIds to compare source/target links to
@@ -296,40 +379,59 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
             _filtered.style('opacity', 0);
           }
         });
-      }
-      // hide any related "link" nodes using "_excludedIds" members
-      // generated from filtering function
-      if(_excludedIds && this.link && this.link.filter ) {
-        const _linksToHide = this.link.filter( (lNode) => {
-          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
-        });
-        if(_linksToHide && _linksToHide.style) {
-          try {
-            _linksToHide.style('opacity', 0);
-          } catch(err) {}
+
+        // hide any related "link" nodes using "_excludedIds" members
+        // generated from filtering function
+        if(_excludedIds && this.link && this.link.filter ) {
+          const _linksToHide = this.link.filter( (lNode) => {
+            return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
+          });
+          if(_linksToHide && _linksToHide.style) {
+            try {
+              _linksToHide.style('opacity', 0);
+            } catch(err) {}
+          }
         }
-      }
-      // hide any related match keys
-      //console.warn('filter match keys? ', _excludedIds, this.linkLabel);
-      if(_excludedIds && this.link && this.linkLabel.filter ) {
-        const _linksToHide = this.linkLabel.filter( (lNode) => {
-          return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
-        });
-        if(_linksToHide && _linksToHide.style) {
-          try {
-            _linksToHide.style('opacity', 0);
-          } catch(err) {}
+        // hide any related match keys
+        //console.warn('filter match keys? ', _excludedIds, this.linkLabel);
+        if(_excludedIds && this.link && this.linkLabel.filter ) {
+          const _linksToHide = this.linkLabel.filter( (lNode) => {
+            return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
+          });
+          if(_linksToHide && _linksToHide.style) {
+            try {
+              _linksToHide.style('opacity', 0);
+            } catch(err) {}
+          }
         }
+        // --- end D3 filter
       }
     }
+
   }
   /**
    * apply effect or styles to nodes that match any of the "selectorFn" functions in fnPairArray
    * @param fnPairArray
    */
   private _applyModifierFn(fnPairArray: NodeFilterPair[]) {
+
     if (fnPairArray && fnPairArray.length >= 0) {
-      if( this.node && this.node.filter) {
+      if(this.chart && this.chart.each) {
+        // Keylines
+        const _nodes = [];
+        // first convert chart nodes in to an array
+        this.chart.each({ type: 'node' }, (node) => {
+          _nodes.push(node);
+        });
+        // now filter array by selectorFns
+        fnPairArray.forEach( (pairFn) => {
+          const _filtered = _nodes.filter( pairFn.selectorFn );
+          if(_filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
+            pairFn.modifierFn(_filtered, this.chart);
+          }
+        });
+      } else if( this.node && this.node.filter) {
+        // D3
         fnPairArray.forEach( (pairFn) => {
           const _filtered = this.node.filter( pairFn.selectorFn );
           if(_filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
@@ -348,6 +450,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * @param fnPairArray
    */
   private _applyDataFn(fnPairArray: NodeFilterPair[]) {
+    /*
     if (fnPairArray && fnPairArray.length >= 0) {
       if( this.node && this.node.filter) {
         fnPairArray.forEach( (pairFn) => {
@@ -359,6 +462,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         });
       }
     }
+    */
   }
   /**
    * set the filters to apply to the display of nodes in graph. The default is to hide any
@@ -369,8 +473,18 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
+    const oldValueAsJSON = JSON.stringify(this._filterFn);
     this._filterFn = fn as NodeFilterPair[];
-    this._applyFilterFn(this._filterFn);
+    if(oldValueAsJSON != JSON.stringify(this._filterFn)) {
+      //console.warn('SzRelationshipNetworkComponent.filter = ', JSON.stringify(this._filterFn));
+      this._applyFilterFn(this._filterFn);
+    }
+  }
+  /**
+   * get the filters that are being applied to nodes.
+   */
+  public get filter(): NodeFilterPair[] | NodeFilterPair {
+    return this._filterFn;
   }
   /** only settable through "highlight" setter */
   private _highlightFn: NodeFilterPair[];
@@ -385,8 +499,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
+    const oldValueAsJSON = JSON.stringify(this._highlightFn);
     this._highlightFn = fn as NodeFilterPair[];
-    this._applyModifierFn(this._highlightFn);
+    if(oldValueAsJSON != JSON.stringify(this._highlightFn)) {
+      this._applyModifierFn(this._highlightFn);
+    }
   }
   /** only settable through "modify" setter */
   private _modifyFn: NodeFilterPair[];
@@ -401,8 +518,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
+    const oldValueAsJSON = JSON.stringify(this._modifyFn);
     this._modifyFn = fn as NodeFilterPair[];
-    this._applyDataFn(this._modifyFn);
+    if(oldValueAsJSON != JSON.stringify(this._modifyFn)) {
+      this._applyDataFn(this._modifyFn);
+    }
   }
 
   /**  the node or main selection */
@@ -454,15 +574,17 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     if(this._entityIds) {
       this.getNetwork().pipe(
         takeUntil(this.unsubscribe$),
-        map(this.asGraph.bind(this)),
-        tap( (gdata: Graph) => {
+        first(),
+        map( this.asGraphInputs.bind(this) ),
+        tap( (gdata: SzNetworkGraphInputs) => {
           // console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
-          if(gdata.links.length == 0) {
+          if(gdata && gdata.data && gdata.data.entities && gdata.data.entities.length == 0) {
             this.noResults.emit(true);
             this._requestNoResults.next(true);
           }
+          this.onDataLoaded.emit(gdata);
         })
-      ).subscribe( this.addSvg.bind(this) );
+      ).subscribe( this.render.bind(this) );
     }
   }
 
@@ -490,9 +612,34 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     }
   }
 
+  /** main render lifecycle method */
+  public render(gdata: SzNetworkGraphInputs) {
+    console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
+
+    this.loadedData = gdata;
+    if(!this.renderComplete) {
+      this.addSvg(gdata);
+    }
+
+    // publish out event
+    this._renderComplete.next(true);
+    // if we have filters apply them
+    if( this._filterFn && this._filterFn.length > 0) {
+      this._applyFilterFn(this._filterFn);
+    }
+    // if we have modifiers apply them
+    if( this._modifyFn && this._modifyFn.length > 0) {
+      this._applyDataFn(this._modifyFn);
+    }
+    // if we have highlighters apply them
+    if( this._highlightFn && this._highlightFn.length > 0) {
+      this._applyModifierFn(this._highlightFn);
+    }
+  }
+
   /** re-render if already loaded */
   public reload(): void {
-    // console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
+    console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
     if(this.svg && this.svg.selectAll) {
       this.svg.selectAll('*').remove();
     }
@@ -502,17 +649,41 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       this.getNetwork().pipe(
         takeUntil(this.unsubscribe$),
         first(),
-        map(this.asGraph.bind(this)),
-        tap( (gdata: Graph) => {
-          console.log('SzRelationshipNetworkGraph.reload()', gdata);
+        map( this.asGraphInputs.bind(this) ),
+        tap( (gdata: SzNetworkGraphInputs) => {
+          console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
+          if(gdata && gdata.data && gdata.data.entities && gdata.data.entities.length == 0) {
+            this.noResults.emit(true);
+            this._requestNoResults.next(true);
+          }
           this._requestComplete.next(true);
+          this.onDataLoaded.emit(gdata);
         })
-      ).subscribe( this.addSvg.bind(this) );
+      ).subscribe( this.render.bind(this) );
     }
+  }
+  /** take the result from getNetwork and transpose to SzNetworkGraphInputs class  */
+  asGraphInputs(graphResponse: SzEntityNetworkResponse) : SzNetworkGraphInputs {
+    const _showLinkLabels = this.showLinkLabels;
+    return new class implements SzNetworkGraphInputs {
+      data = graphResponse.data; // SzEntityNetworkData
+      showLinkLabels = _showLinkLabels;
+    };
   }
 
   /** render svg elements from graph data */
-  addSvg(graph: Graph, parentSelection = d3.select("body")) {
+  addSvg(gdata: SzNetworkGraphInputs, parentSelection = d3.select("body")) {
+    let graph = this.asGraph( gdata );
+/**
+ * graph.data =
+ SzEntityNetworkData {
+    entityPaths?: Array<SzEntityPath>;
+    entities?: Array<SzEntityData>;
+}
+ */
+
+
+  //addSvg(graph: Graph, parentSelection = d3.select("body")) {
     // console.log('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
     const tooltip = parentSelection
       .append("div")
@@ -686,12 +857,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
     // Define the simulation with nodes, forces, and event listeners.
 
-    this.forceSimulation = d3.forceSimulation(graph.nodes)
-      .force('link', d3.forceLink().links(graph.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
+    /*
+    this.forceSimulation = d3.forceSimulation(graph.data.nodes)
+      .force('link', d3.forceLink().links(graph.data.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
       .force('charge', d3.forceManyBody().strength(-30)) // nodes repel each other
       .force('x', d3.forceX(this._statWidth / 2).strength(0.05)) // x and y continually pull all nodes toward a point.  If the
       .force('y', d3.forceY(this._statHeight / 2).strength(0.05)) //  graph has multiple networks, this keeps them on screen
       .on('tick', this.tick.bind(this));
+    */
 
     // Make the tooltip visible when mousing over nodes.  Fade out distant nodes
     this.node.on('mouseover.tooltip', function (d) {
@@ -878,7 +1051,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    *   Restart sets alpha back to 1.
    */
   dragstarted() {
-    if (!d3.event.active) this.forceSimulation.alphaTarget(0.3).restart();
+    if (!d3.event.active && this.forceSimulation) this.forceSimulation.alphaTarget(0.3).restart();
     d3.event.subject.fx = d3.event.subject.x;
     d3.event.subject.fy = d3.event.subject.y;
   }
@@ -896,7 +1069,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    *   The simulation does not stop while alphaTarget (default 0, set at 0.3 by dragstarted) > alphaMin (default 0.001)
    */
   dragended() {
-    if (!d3.event.active) this.forceSimulation.alphaTarget(0);
+    if (!d3.event.active && this.forceSimulation) this.forceSimulation.alphaTarget(0);
     if (this._fixDraggedNodes) {
       // nodes once dragged stay where you put them
       // elegant compromise
@@ -917,10 +1090,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   /**
    * primary data model shaper.
    */
-  asGraph(resp: SzEntityNetworkResponse) : Graph {
-    // @todo change from "any" to SzEntityNetworkResponse once it's fixed in the rest-api-client-ng package
-    let data: any;
-    if (resp && resp.data) data = resp.data;
+  private asGraph(inputs: SzNetworkGraphInputs) {
+    const showLinkLabels = inputs.showLinkLabels;
+    let data = (inputs && inputs.data) ? inputs && inputs.data : undefined;
+    // if (data && data.data) data = data.data;
+
     const entityPaths = data.entityPaths;
     const entitiesData = data.entities;
     const entityIndex = [];
@@ -931,6 +1105,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     const coreEntityIds = [];
     const coreLinkIds = [];
     const primaryEntities = this._entityIds.map( parseInt );
+
+    console.log('SzRelationshipNetworkGraph.asGraph: ', inputs, data, entitiesData);
 
     // Identify queried nodes and the nodes and links that connect them.
     entityPaths.forEach( (entPath) => {
@@ -1080,5 +1256,61 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       }
     }
     return 'default';
+  }
+  /** get sources summary lines as string array */
+  private static sourcesAsStringArray(recordSummaryArray: any[], records: any[]): string[] {
+    const retValue = [];
+
+    for (let i = 0; i < recordSummaryArray.length; i++) {
+      const entry = recordSummaryArray[i];
+      if (entry.recordCount > 1) {
+        retValue.push(`${ entry.dataSource } (${entry.recordCount})`);
+      } else {
+        const recordId = SzRelationshipNetworkComponent.getRecordId(records, entry.dataSource);
+        retValue.push(`${ entry.dataSource } ${recordId}`);
+      }
+    }
+    return retValue;
+  }
+
+  private static getRecordId(records: any[], targetDataSource: any) {
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i];
+      if (record.dataSource === targetDataSource) {
+        let recordId: string = record.recordId;
+
+        const recordCharLimit = Math.max(this.SOURCE_LINE_CHAR_LIMIT - targetDataSource.toString().length - 1, this.MIN_RECORD_ID_LENGTH);
+
+        if (recordId.toString().length > recordCharLimit) {
+          recordId = recordId.substring(0, recordCharLimit) + '...';
+        }
+        return recordId;
+      }
+    }
+    return '';
+  }
+
+  /** get array of datasources present in network data */
+  public static getDataSourcesFromEntityNetworkData(data: SzEntityNetworkData): string[] {
+    const _datasources = [];
+    if(data && data.entities && data.entities.map) {
+      // flatten first
+      const entititiesDS = data.entities.map( (entity) => {
+        if(entity.resolvedEntity.recordSummaries && entity.resolvedEntity.recordSummaries.map) {
+          return entity.resolvedEntity.recordSummaries.map( (_ds) => _ds.dataSource);
+        }
+        return entity.resolvedEntity.recordSummaries;
+      });
+      entititiesDS.forEach( (element: string[]) => {
+        if(element && element.forEach) {
+          element.forEach( (_dsString: string) => {
+            if(_datasources.indexOf(_dsString) === -1){
+              _datasources.push(_dsString);
+            }
+          });
+        }
+      });
+    }
+    return _datasources;
   }
 }

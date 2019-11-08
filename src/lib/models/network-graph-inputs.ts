@@ -1,4 +1,6 @@
+import { SzEntityNetworkResponse, SzEntityNetworkData  } from '@senzing/rest-api-client-ng';
+
 export interface SzNetworkGraphInputs {
-  data;
+  data: SzEntityNetworkData;
   showLinkLabels: boolean;
 }

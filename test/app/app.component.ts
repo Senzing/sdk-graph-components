@@ -23,23 +23,45 @@ export class AppComponent {
   }
 
   public get entityNodeModifiers(): NodeFilterPair[] {
-    return [
-      { selectorFn: this.inOwners, modifierFn: this.setOwnersColor },
-      { selectorFn: this.inCompanies, modifierFn: this.setCompaniesColor }
-    ];
+    if(this.graph && this.graph.isD3 === true) {
+      return [
+        { selectorFn: this.inOwners, modifierFn: this.setOwnersColor },
+        { selectorFn: this.inCompanies, modifierFn: this.setCompaniesColor }
+      ];
+    } else if (this.graph && this.graph.isKeyLines === true) {
+      return [
+        { selectorFn: this.inOwners, modifierFn: this.setOwnersColor },
+        { selectorFn: this.inCompanies, modifierFn: this.setCompaniesColor }
+      ];
+    }
   }
 
   public get entityNodeFilters(): NodeFilterPair[] {
-    return [
-      { selectorFn: (nodeData) => {
-        return nodeData.dataSources.indexOf('SAMPLE PERSON') >= 0;
-      }}
-    ];
+    if(this.graph && this.graph.isD3 === true) {
+      return [
+        { selectorFn: (nodeData) => {
+          return nodeData.dataSources.indexOf('SAMPLE PERSON') >= 0;
+        }}
+      ];
+    } else if (this.graph && this.graph.isKeyLines === true) {
+      return [
+        {
+          selectorFn: (nodeData) => {
+            return !(nodeData.d.dataSources.some( (dsName) => {
+              return ['SAMPLE PERSON'].indexOf(dsName) > -1;
+            }));
+          }
+        }
+      ];
+    }
   }
 
   isInDataSource(dataSource, nodeData) {
-    // console.log('fromOwners: ', nodeData);
-    return nodeData.dataSources.indexOf(dataSource) >= 0;
+    if (nodeData && nodeData.d) {
+      return (nodeData.d.dataSources.indexOf(dataSource) >= 0);
+    } else if (nodeData && nodeData.dataSources) {
+      return nodeData.dataSources.indexOf(dataSource) >= 0;
+    }
   }
 
   public styleOwnersByClass(nodeList) {
@@ -48,9 +70,20 @@ export class AppComponent {
     });
   }
 
-  public setNodeFillColor(color, nodeList) {
+  public setNodeFillColor(color, nodeList, scope) {
     // nodeList.attr('fill', '#e6b100');
-    nodeList.style('fill', color);
+    if (nodeList && nodeList.style) {
+      nodeList.style('fill', color);
+    } else if ( scope && nodeList instanceof Array && nodeList.every && nodeList.every( (nodeItem) => nodeItem.type === 'node')) {
+      const modifierList = nodeList.map((item) => {
+        return { id: item.id, c: color };
+      });
+      if (scope && scope.setProperties) {
+        scope.setProperties(modifierList);
+      }
+    } else {
+      console.warn('cannot modify');
+    }
   }
 
   public inOwners = this.isInDataSource.bind(this, 'OWNERS');

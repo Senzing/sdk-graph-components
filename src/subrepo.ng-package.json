@@ -7,6 +7,8 @@
   "whitelistedNonPeerDependencies": [
     "@senzing/rest-api-client-ng",
     "d3",
-    "@types/d3"
+    "@types/d3",
+    "mustache",
+    "jquery"
   ]
 }
