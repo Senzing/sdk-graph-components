@@ -136,8 +136,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   private linkGroup: any;
 
   // --- used for compatibility sensing
-  public isKeyLines = true;
-  public isD3 = false;
+  public isKeyLines = false;
+  public isD3 = true;
 
   /** svg element */
   @ViewChild('graphEle') svgComponent;
@@ -209,7 +209,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * content centering and dynamic scaling properties.
    * @internal
   */
-  private _svgViewBox: string = '150 50 400 300';
+  private _svgViewBox: string = '150 50 800 400';
   /**
    * sets the viewBox attribute on the svg element.
   */
@@ -450,9 +450,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * @param fnPairArray
    */
   private _applyDataFn(fnPairArray: NodeFilterPair[]) {
-    /*
     if (fnPairArray && fnPairArray.length >= 0) {
-      if( this.node && this.node.filter) {
+      if(this.chart && this.chart.each) {
+        // TODO: implement in KL way
+      } else if( this.node && this.node.filter) {
         fnPairArray.forEach( (pairFn) => {
           const _filtered = this.node.filter( pairFn.selectorFn );
           if(_filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
@@ -462,7 +463,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         });
       }
     }
-    */
   }
   /**
    * set the filters to apply to the display of nodes in graph. The default is to hide any
@@ -614,14 +614,14 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** main render lifecycle method */
   public render(gdata: SzNetworkGraphInputs) {
-    console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
-
+    //console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
     this.loadedData = gdata;
-    if(!this.renderComplete) {
+
+    if(!this._rendered) {
       this.addSvg(gdata);
     }
-
     // publish out event
+    /*
     this._renderComplete.next(true);
     // if we have filters apply them
     if( this._filterFn && this._filterFn.length > 0) {
@@ -635,6 +635,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     if( this._highlightFn && this._highlightFn.length > 0) {
       this._applyModifierFn(this._highlightFn);
     }
+    */
   }
 
   /** re-render if already loaded */
@@ -673,18 +674,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** render svg elements from graph data */
   addSvg(gdata: SzNetworkGraphInputs, parentSelection = d3.select("body")) {
-    let graph = this.asGraph( gdata );
-/**
- * graph.data =
- SzEntityNetworkData {
-    entityPaths?: Array<SzEntityPath>;
-    entities?: Array<SzEntityData>;
-}
- */
-
-
-  //addSvg(graph: Graph, parentSelection = d3.select("body")) {
-    // console.log('@senzing/sdk-graph-components:sz-relationship-network.addSvg');
+    const graph = this.asGraph( gdata );
     const tooltip = parentSelection
       .append("div")
       .attr("class", "sz-graph-tooltip")
@@ -692,6 +682,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
     // Add the SVG to the HTML body
     this.svg = d3.select( this.svgElement );
+    // console.log('@senzing/sdk-graph-components:sz-relationship-network.addSvg', this.svg, this.svgElement, gdata, graph);
 
     /*
      * If you're unfamiliar with selectors acting like a join (starting in d3.v4), here's where things may be confusing.
@@ -839,11 +830,8 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       }
     }
 
-    // Add .png icons for businesses
-    // TODO replace .png business icon with SVG
-    /*
+    // Add icons for businesses
     this.node.filter(d => d.iconType === "business")
-      .append('image')
       .attr("xlink:href", d => {
         const nodeType = d.isQueriedNode ? 'queried' : d.isCoreNode ? 'core' : 'buildout';
         return "../img/icons8-building-50-" + nodeType + ".png";
@@ -853,18 +841,16 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       .attr("height", 50)
       .attr("width", 50)
       .attr('class', "sz-graph-icon " + (d => d.isQueriedNode ? 'sz-graph-queried-node' : d.isCoreNode ? 'sz-graph-core-node' : 'sz-graph-node'));
-    */
 
     // Define the simulation with nodes, forces, and event listeners.
 
-    /*
-    this.forceSimulation = d3.forceSimulation(graph.data.nodes)
-      .force('link', d3.forceLink().links(graph.data.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
+
+    this.forceSimulation = d3.forceSimulation(graph.nodes)
+      .force('link', d3.forceLink().links(graph.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
       .force('charge', d3.forceManyBody().strength(-30)) // nodes repel each other
       .force('x', d3.forceX(this._statWidth / 2).strength(0.05)) // x and y continually pull all nodes toward a point.  If the
       .force('y', d3.forceY(this._statHeight / 2).strength(0.05)) //  graph has multiple networks, this keeps them on screen
       .on('tick', this.tick.bind(this));
-    */
 
     // Make the tooltip visible when mousing over nodes.  Fade out distant nodes
     this.node.on('mouseover.tooltip', function (d) {
@@ -1092,7 +1078,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    */
   private asGraph(inputs: SzNetworkGraphInputs) {
     const showLinkLabels = inputs.showLinkLabels;
-    let data = (inputs && inputs.data) ? inputs && inputs.data : undefined;
+    const data = (inputs && inputs.data) ? inputs && inputs.data : undefined;
     // if (data && data.data) data = data.data;
 
     const entityPaths = data.entityPaths;
@@ -1304,7 +1290,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       entititiesDS.forEach( (element: string[]) => {
         if(element && element.forEach) {
           element.forEach( (_dsString: string) => {
-            if(_datasources.indexOf(_dsString) === -1){
+            if(_datasources.indexOf(_dsString) === -1) {
               _datasources.push(_dsString);
             }
           });
