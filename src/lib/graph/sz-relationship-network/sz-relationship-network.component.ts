@@ -209,7 +209,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * content centering and dynamic scaling properties.
    * @internal
   */
-  private _svgViewBox: string = '150 50 800 400';
+  private _svgViewBox: string = '150 50 400 300';
   /**
    * sets the viewBox attribute on the svg element.
   */
@@ -614,14 +614,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** main render lifecycle method */
   public render(gdata: SzNetworkGraphInputs) {
-    //console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
+    console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
     this.loadedData = gdata;
-
-    if(!this._rendered) {
-      this.addSvg(gdata);
-    }
+    this.addSvg(gdata);
     // publish out event
-    /*
     this._renderComplete.next(true);
     // if we have filters apply them
     if( this._filterFn && this._filterFn.length > 0) {
@@ -635,12 +631,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     if( this._highlightFn && this._highlightFn.length > 0) {
       this._applyModifierFn(this._highlightFn);
     }
-    */
   }
 
   /** re-render if already loaded */
   public reload(): void {
-    console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
+    //console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
     if(this.svg && this.svg.selectAll) {
       this.svg.selectAll('*').remove();
     }
@@ -652,7 +647,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         first(),
         map( this.asGraphInputs.bind(this) ),
         tap( (gdata: SzNetworkGraphInputs) => {
-          console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
+          //console.log('SzRelationshipNetworkGraph: g1 = ', gdata);
           if(gdata && gdata.data && gdata.data.entities && gdata.data.entities.length == 0) {
             this.noResults.emit(true);
             this._requestNoResults.next(true);
@@ -900,7 +895,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     graph.links.forEach( this.registerLink.bind(this) );
     // publish out event
     this._rendered = true;
-    this._renderComplete.next(true);
   }
 
   private registerLink(d: LinkInfo) {
@@ -1092,7 +1086,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     const coreLinkIds = [];
     const primaryEntities = this._entityIds.map( parseInt );
 
-    console.log('SzRelationshipNetworkGraph.asGraph: ', inputs, data, entitiesData);
+    //console.log('SzRelationshipNetworkGraph.asGraph: ', inputs, data, entitiesData);
 
     // Identify queried nodes and the nodes and links that connect them.
     entityPaths.forEach( (entPath) => {
