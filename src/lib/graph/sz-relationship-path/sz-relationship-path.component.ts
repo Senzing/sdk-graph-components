@@ -281,7 +281,7 @@ export class SzRelationshipPathComponent implements OnInit {
 
   }
 
-  private registerLink(d: LinkInfo) {
+  private registerLink(d) {
     const source : NodeInfo = <NodeInfo> d.source;
     const target : NodeInfo = <NodeInfo> d.target;
     this.linkedByNodeIndexMap[`${source.index},${target.index}`] = 1;

@@ -1,20 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align: left">
+<div style="text-align: left; width: 100%; height: 900px;">
   <input type="checkbox"
   id="graph-toggle-match-keys" name="graph-toggle-match-keys"
   [checked]="showGraphMatchKeys"
   (change)="toggleGraphMatchKeys($event)"><label for="graph-toggle-match-keys">Toggle Match Keys</label>
 
-  <div class="test-wrapper">
-    <sz-graph-test-component></sz-graph-test-component>
-  </div>
+  <div><button (click)="modifyData($event)"> add "newProp = true" to data for all matching nodes </button></div>
+
   <sz-relationship-network
-  svgWidth=2000
-  svgHeight=1000
+  svgWidth=100%
+  svgHeight=900
   port=8080
   entityIds="1,1005"
   maxDegrees=3
-  buildOut=2
+  buildOut=3
+  [filter]="entityNodeFilters"
+  [highlight]="entityNodeModifiers"
   [showLinkLabels]="showGraphMatchKeys"
   (contextMenuClick)="onContextMenuClick($event)"
   maxEntities=1000>
