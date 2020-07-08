@@ -2,7 +2,7 @@ import { Component, Input, Output, HostBinding, OnInit, ViewChild, AfterViewInit
 import * as d3 from 'd3';
 import { Graph, NodeInfo, LinkInfo } from './graph-types';
 import { Simulation } from 'd3-force';
-import { EntityGraphService, SzEntityNetworkResponse, SzEntityNetworkData } from '@senzing/rest-api-client-ng';
+import { EntityGraphService, SzEntityNetworkResponse, SzEntityNetworkData, SzFeatureMode } from '@senzing/rest-api-client-ng';
 import { SzNetworkGraphInputs } from '../../models/network-graph-inputs';
 import { map, tap, first, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -329,6 +329,9 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    */
   @Output() entityDblClick: EventEmitter<any> = new EventEmitter<any>();
 
+  /** @internal */
+  @Input() public captureMouseWheel: boolean = false;
+
   /**
    * filtering to apply to graph response collection.
    * only settable through "filter" setter
@@ -538,6 +541,41 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     }
   }
 
+  /**
+   * If the node for an entity has related entities that aren't already iin the graph
+   * @param entityId The numeric entity ID
+   */
+  public canExpandNode(entityId: number): boolean {
+    return false;
+  }
+
+  /**
+   * Add to the chart entities immediately related to the specified entity
+   * @param entityId The numeric entity ID
+   */
+  public expandNode(entityId: number) {
+    return false;
+  }
+
+  /**
+   * If the node for an entity can be removed from the graph
+   * (e.g. the node that the graph is centered on cannot be removed)
+   *
+   * @param entityId The entityId of the node that might be removed
+   */
+  public canRemoveNode(entityId: number): boolean {
+    return false;
+  }
+
+  /**
+   * Remove a node and store its state on deck.
+   * Any nodes that are no longer connected to any anchor nodes are removed in a cascade.
+   *
+   * @param entityId The ID of the node being removed
+   */
+  public removeNode(entityId: number) {}
+
+
   /** main D3 selection entity nodes */
   node;
   /** text names that appear under entity nodes */
@@ -601,14 +639,19 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    */
   private getNetwork() {
     if(this._entityIds) {
-      return this.graphService.findNetworkByEntityID(
+      return this.graphService.findEntityNetwork(
         this._entityIds,
+        undefined,
         this._maxDegrees,
         this._buildOut,
         this._maxEntities,
-        SzRelationshipNetworkComponent.WITH_RAW );
+        SzFeatureMode.NONE,
+        true,
+        false,
+        false,
+        SzRelationshipNetworkComponent.WITH_RAW) ;
     } else {
-      throw new Error('entity ids are required to make "findNetworkByEntityID" call.');
+      throw new Error('entity ids are required to make "findEntityNetwork" call.');
     }
   }
 

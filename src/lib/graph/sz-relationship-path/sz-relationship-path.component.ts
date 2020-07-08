@@ -111,12 +111,17 @@ export class SzRelationshipPathComponent implements OnInit {
 
 
   private getPath() {
-    return this.graphService.findPathByEntityID(
+    return this.graphService.findEntityPath(
       { id: this._from },
       { id: this._to },
       this._maxDegrees,
       this._excludeIds,
+      undefined,
       true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
       undefined,
       SzRelationshipPathComponent.WITH_RAW );
   }
@@ -415,7 +420,7 @@ export class SzRelationshipPathComponent implements OnInit {
   static asGraph(rawTextOrJson) {
     let data = (rawTextOrJson instanceof Object) ? rawTextOrJson : JSON.parse(rawTextOrJson);
 
-    // The input can either be the output of the engine's findPathByEntityID or findPathByRecordID methods
+    // The input can either be the output of the engine's findEntityPath or findPathByRecordID methods
     //   or the response body of a call to the REST API's /entity-paths.
     if (data["rawData"]) data = data["rawData"];
     const entityPaths = data["ENTITY_PATHS"];
