@@ -167,8 +167,16 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // console.log('@senzing/sdk-graph-components:sz-relationship-network.setShowLinkLabels: UNKNOWN!', this._showLinkLabels, this.linkLabel);
     }
   }
+
   public get showLinkLabels(): boolean {
     return this._showLinkLabels;
+  }
+
+  @HostBinding('class.showing-link-labels') public get showingLinkLabels(): boolean {
+    return this._showLinkLabels;
+  }
+  @HostBinding('class.not-showing-link-labels') public get hidingLinkLabels(): boolean {
+    return !this._showLinkLabels;
   }
 
   private _loadedData: SzNetworkGraphInputs;
@@ -1002,7 +1010,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     return d => {
       this.node.transition().duration(100).style('opacity', function (o) {
         const thisOpacity = isConnectedLocal(d, o) ? 1 : opacity;
-        this.setAttribute('fill-opacity', thisOpacity);
+        //this.setAttribute('fill-opacity', thisOpacity);
         return thisOpacity;
       });
 
@@ -1022,7 +1030,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       this.node.transition().duration(100).style('opacity', function (o) {
         const thisOpacity = isConnectedLocal(d.source, o) &&
                             isConnectedLocal(d.target, o) ? 1 : opacity;
-        this.setAttribute('fill-opacity', thisOpacity);
+        //this.setAttribute('fill-opacity', thisOpacity);
         return thisOpacity;
       });
 
