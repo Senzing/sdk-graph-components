@@ -75,12 +75,17 @@ export class SzRelationshipNetworkLookupComponent implements OnInit {
   }
 
   broadcastInputs() {
-    if(this._entityIds){
-      return this.graphService.findNetworkByEntityID(
+    if(this._entityIds) {
+      return this.graphService.findEntityNetwork(
         this._entityIds,
+        undefined,
         this._maxDegrees,
         this._buildOut,
         this._maxEntities,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         SzRelationshipNetworkLookupComponent.WITH_RAW )
         .subscribe(this.emitResult.bind(this));
     } else {

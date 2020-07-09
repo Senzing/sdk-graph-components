@@ -111,12 +111,17 @@ export class SzRelationshipPathComponent implements OnInit {
 
 
   private getPath() {
-    return this.graphService.findPathByEntityID(
+    return this.graphService.findEntityPath(
       { id: this._from },
       { id: this._to },
       this._maxDegrees,
       this._excludeIds,
+      undefined,
       true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
       undefined,
       SzRelationshipPathComponent.WITH_RAW );
   }

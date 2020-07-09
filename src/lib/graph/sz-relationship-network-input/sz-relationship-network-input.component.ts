@@ -54,11 +54,15 @@ export class SzRelationshipNetworkInputComponent implements OnInit {
   }
 
   broadcastInputs() {
-    this.graphService.findNetworkByEntityID(
-      this.entityIds(),
+    this.graphService.findEntityNetwork(this.entityIds(),
+      undefined,
       this.networkMaxDegrees,
       this.networkBuildout,
       this.maxEntities,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
       SzRelationshipNetworkComponent.WITH_RAW)
       .subscribe(this.emitResult.bind(this));
   }
