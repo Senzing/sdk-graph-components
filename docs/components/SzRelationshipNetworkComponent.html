@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Senzing SDK Graph Components</title>
+        <title>sdk-graph-components documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,7 +13,7 @@
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="../" class="navbar-brand">Senzing SDK Graph Components</a>
+            <a href="../" class="navbar-brand">sdk-graph-components documentation</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
 
@@ -73,6 +73,7 @@
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
                     <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
     <p class="comment">
@@ -137,12 +138,30 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#chart">chart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#entityId">entityId</a>
+                            </li>
+                            <li>
                                 <a href="#forceSimulation">forceSimulation</a>
+                            </li>
+                            <li>
+                                <a href="#graphData">graphData</a>
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
                                     <span class="modifier">Readonly</span>
                                 <a href="#ICONS">ICONS</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isD3">isD3</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isKeyLines">isKeyLines</a>
                             </li>
                             <li>
                                 <a href="#link">link</a>
@@ -154,10 +173,34 @@
                                 <a href="#linkLabel">linkLabel</a>
                             </li>
                             <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#MIN_RECORD_ID_LENGTH">MIN_RECORD_ID_LENGTH</a>
+                            </li>
+                            <li>
                                 <a href="#node">node</a>
                             </li>
                             <li>
                                 <a href="#nodeLabel">nodeLabel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#renderComplete">renderComplete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#requestComplete">requestComplete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#requestNoResults">requestNoResults</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#requestStarted">requestStarted</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#SOURCE_LINE_CHAR_LIMIT">SOURCE_LINE_CHAR_LIMIT</a>
                             </li>
                             <li>
                                 <a href="#svgComponent">svgComponent</a>
@@ -165,6 +208,50 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#svgElement">svgElement</a>
+                            </li>
+                            <li>
+                                <a href="#tooltip">tooltip</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#tooltipContainer">tooltipContainer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipData">toolTipData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipEntData">toolTipEntData</a>
+                            </li>
+                            <li>
+                                <a href="#tooltipEntTemplate">tooltipEntTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipLinkData">toolTipLinkData</a>
+                            </li>
+                            <li>
+                                <a href="#tooltipLinkTemplate">tooltipLinkTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipPosLeft">toolTipPosLeft</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipPosTop">toolTipPosTop</a>
+                            </li>
+                            <li>
+                                <a href="#tooltipShowing">tooltipShowing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#toolTipTemplate">toolTipTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#unsubscribe$">unsubscribe$</a>
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
@@ -187,7 +274,15 @@
                                 <a href="#addSvg">addSvg</a>
                             </li>
                             <li>
-                                <a href="#asGraph">asGraph</a>
+                                <a href="#asGraphInputs">asGraphInputs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canExpandNode">canExpandNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#canRemoveNode">canRemoveNode</a>
                             </li>
                             <li>
                                 <a href="#dragended">dragended</a>
@@ -199,11 +294,19 @@
                                 <a href="#dragstarted">dragstarted</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#expandNode">expandNode</a>
+                            </li>
+                            <li>
                                 <a href="#fade">fade</a>
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
                                 <a href="#firstOrNull">firstOrNull</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#getDataSourcesFromEntityNetworkData">getDataSourcesFromEntityNetworkData</a>
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
@@ -231,11 +334,39 @@
                                 <a href="#ngAfterViewInit">ngAfterViewInit</a>
                             </li>
                             <li>
+                                <a href="#ngOnDestroy">ngOnDestroy</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
                                     <span class="modifier">Static</span>
                                 <a href="#nodeTooltipText">nodeTooltipText</a>
+                            </li>
+                            <li>
+                                <a href="#onNodeClick">onNodeClick</a>
+                            </li>
+                            <li>
+                                <a href="#onNodeContextClick">onNodeContextClick</a>
+                            </li>
+                            <li>
+                                <a href="#onNodeDblClick">onNodeDblClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onRightClick">onRightClick</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#reload">reload</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#removeNode">removeNode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#render">render</a>
                             </li>
                             <li>
                                 <a href="#tick">tick</a>
@@ -256,10 +387,19 @@
                                 <a href="#buildOut">buildOut</a>
                             </li>
                             <li>
+                                <a href="#captureMouseWheel">captureMouseWheel</a>
+                            </li>
+                            <li>
                                 <a href="#entityIds">entityIds</a>
                             </li>
                             <li>
-                                <a href="#forceXYContinuous">forceXYContinuous</a>
+                                <a href="#filter">filter</a>
+                            </li>
+                            <li>
+                                <a href="#fixDraggedNodes">fixDraggedNodes</a>
+                            </li>
+                            <li>
+                                <a href="#highlight">highlight</a>
                             </li>
                             <li>
                                 <a href="#labelPadding">labelPadding</a>
@@ -268,10 +408,16 @@
                                 <a href="#linkGravity">linkGravity</a>
                             </li>
                             <li>
+                                <a href="#loadedData">loadedData</a>
+                            </li>
+                            <li>
                                 <a href="#maxDegrees">maxDegrees</a>
                             </li>
                             <li>
                                 <a href="#maxEntities">maxEntities</a>
+                            </li>
+                            <li>
+                                <a href="#modify">modify</a>
                             </li>
                             <li>
                                 <a href="#showLinkLabels">showLinkLabels</a>
@@ -292,7 +438,56 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#contextMenuClick">contextMenuClick</a>
+                            </li>
+                            <li>
+                                <a href="#entityClick">entityClick</a>
+                            </li>
+                            <li>
+                                <a href="#entityDblClick">entityDblClick</a>
+                            </li>
+                            <li>
+                                <a href="#loading">loading</a>
+                            </li>
+                            <li>
+                                <a href="#noResults">noResults</a>
+                            </li>
+                            <li>
+                                <a href="#onDataLoaded">onDataLoaded</a>
+                            </li>
+                            <li>
+                                <a href="#rendered">rendered</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostBindings</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#class.not-showing-link-labels">class.not-showing-link-labels</a>
+                            </li>
+                            <li>
+                                <a href="#class.showing-link-labels">class.showing-link-labels</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
                     <tr>
@@ -307,13 +502,16 @@
                                     <a href="#showLinkLabels">showLinkLabels</a>
                                 </li>
                                 <li>
+                                    <a href="#loadedData">loadedData</a>
+                                </li>
+                                <li>
                                     <a href="#svgViewBox">svgViewBox</a>
                                 </li>
                                 <li>
                                     <a href="#svgPreserveAspectRatio">svgPreserveAspectRatio</a>
                                 </li>
                                 <li>
-                                    <a href="#forceXYContinuous">forceXYContinuous</a>
+                                    <a href="#fixDraggedNodes">fixDraggedNodes</a>
                                 </li>
                                 <li>
                                     <a href="#entityIds">entityIds</a>
@@ -332,6 +530,21 @@
                                 </li>
                                 <li>
                                     <a href="#labelPadding">labelPadding</a>
+                                </li>
+                                <li>
+                                    <a href="#filter">filter</a>
+                                </li>
+                                <li>
+                                    <a href="#highlight">highlight</a>
+                                </li>
+                                <li>
+                                    <a href="#modify">modify</a>
+                                </li>
+                                <li>
+                                    <a href="#chartNodes">chartNodes</a>
+                                </li>
+                                <li>
+                                    <a href="#chartData">chartData</a>
                                 </li>
                             </ul>
                         </td>
@@ -394,10 +607,25 @@
                         <b>buildOut</b>
                     </td>
                 </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <a name="captureMouseWheel"></a>
+                        <b>captureMouseWheel</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
             </tbody>
@@ -422,8 +650,25 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="forceXYContinuous"></a>
-                        <b>forceXYContinuous</b>
+                        <a name="filter"></a>
+                        <b>filter</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>set the filters to apply to the display of nodes in graph. The default is to hide any
+nodes that return true when the selectorFn is called on the node.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fixDraggedNodes"></a>
+                        <b>fixDraggedNodes</b>
                     </td>
                 </tr>
                 <tr>
@@ -434,9 +679,24 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <div class="io-description"><p>sets whether or not to force XY gravity and node repulsion
-even after drag repositioning. IE node &quot;snaps&quot; back in to place
-after drag-end.</p>
+                        <div class="io-description"><p>sets whether or not to fix nodes in place after dragging.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="highlight"></a>
+                        <b>highlight</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>set a style or effect to apply to the display of nodes in graph that match any
+of the criteria set by &quot;&quot;.</p>
 </div>
                     </td>
                 </tr>
@@ -478,14 +738,18 @@ after drag-end.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="maxDegrees"></a>
-                        <b>maxDegrees</b>
+                        <a name="loadedData"></a>
+                        <b>loadedData</b>
                     </td>
                 </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                        <a name="maxDegrees"></a>
+                        <b>maxDegrees</b>
                     </td>
                 </tr>
             </tbody>
@@ -498,10 +762,21 @@ after drag-end.</p>
                         <b>maxEntities</b>
                     </td>
                 </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                        <a name="modify"></a>
+                        <b>modify</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>set or update a property on nodes in graph that match any
+of the criteria set by &quot;&quot;.</p>
+</div>
                     </td>
                 </tr>
             </tbody>
@@ -606,7 +881,197 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
             </tbody>
         </table>
 </section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="contextMenuClick"></a>
+                        <b>contextMenuClick</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>emitted when the player right clicks a entity node.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityClick"></a>
+                        <b>entityClick</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>emitted when the player clicks a entity node.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityDblClick"></a>
+                        <b>entityDblClick</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>emitted when the user dbl-clicks a entity node.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loading"></a>
+                        <b>loading</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="noResults"></a>
+                        <b>noResults</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;boolean&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>emitted when the player right clicks a entity node.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="onDataLoaded"></a>
+                        <b>onDataLoaded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;SzNetworkGraphInputs&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>emit &quot;onDataLoaded&quot; when data received and parsed </p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rendered"></a>
+                        <b>rendered</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3>HostBindings</h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="class.not-showing-link-labels"></a>
+                        <span class="name">
+                            <b>
+                            class.not-showing-link-labels</b>
+                            <a href="#class.not-showing-link-labels"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="class.showing-link-labels"></a>
+                        <span class="name">
+                            <b>
+                            class.showing-link-labels</b>
+                            <a href="#class.showing-link-labels"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+</section>
 
 
     <section>
@@ -629,7 +1094,7 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addSvg(graph: <a href="../interfaces/Graph.html">Graph</a>, parentSelection)</code>
+<code>addSvg(gdata: <a href="../interfaces/SzNetworkGraphInputs.html">SzNetworkGraphInputs</a>, parentSelection)</code>
                 </td>
             </tr>
 
@@ -654,9 +1119,9 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>graph</td>
+                                    <td>gdata</td>
                                     <td>
-                                                <code><a href="../interfaces/Graph.html" target="_self" >Graph</a></code>
+                                                <code><a href="../interfaces/SzNetworkGraphInputs.html" target="_self" >SzNetworkGraphInputs</a></code>
                                     </td>
 
                                     <td>
@@ -701,18 +1166,18 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="asGraph"></a>
+                    <a name="asGraphInputs"></a>
                     <span class="name">
                         <b>
-                            asGraph
+                            asGraphInputs
                         </b>
-                        <a href="#asGraph"><span class="icon ion-ios-link"></span></a>
+                        <a href="#asGraphInputs"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>asGraph(resp: SzEntityNetworkResponse)</code>
+<code>asGraphInputs(graphResponse: SzEntityNetworkResponse)</code>
                 </td>
             </tr>
 
@@ -721,7 +1186,7 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>primary data model shaper.</p>
+                    <div class="io-description"><p>take the result from getNetwork and transpose to SzNetworkGraphInputs class  </p>
 </div>
 
                     <div class="io-description">
@@ -736,7 +1201,7 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>resp</td>
+                                    <td>graphResponse</td>
                                     <td>
                                             <code>SzEntityNetworkResponse</code>
                                     </td>
@@ -753,7 +1218,154 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/Graph.html" target="_self" >Graph</a></code>
+                        <b>Returns : </b>        <code><a href="../interfaces/SzNetworkGraphInputs.html" target="_self" >SzNetworkGraphInputs</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canExpandNode"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            canExpandNode
+                        </b>
+                        <a href="#canExpandNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canExpandNode(entityId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If the node for an entity has related entities that aren&#39;t already iin the graph</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entityId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The numeric entity ID</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canRemoveNode"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            canRemoveNode
+                        </b>
+                        <a href="#canRemoveNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canRemoveNode(entityId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>If the node for an entity can be removed from the graph
+(e.g. the node that the graph is centered on cannot be removed)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entityId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entityId of the node that might be removed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </div>
                     <div class="io-description">
@@ -868,6 +1480,79 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expandNode"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            expandNode
+                        </b>
+                        <a href="#expandNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>expandNode(entityId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Add to the chart entities immediately related to the specified entity</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entityId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The numeric entity ID</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -997,6 +1682,74 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDataSourcesFromEntityNetworkData"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Static</span>
+                            getDataSourcesFromEntityNetworkData
+                        </b>
+                        <a href="#getDataSourcesFromEntityNetworkData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDataSourcesFromEntityNetworkData(data: SzEntityNetworkData)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>get array of datasources present in network data </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>SzEntityNetworkData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>string[]</code>
 
                     </div>
                     <div class="io-description">
@@ -1445,6 +2198,41 @@ As currently implemented, any nodes that are connected to both source and target
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <b>
+                            ngOnDestroy
+                        </b>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>unsubscribe when component is destroyed</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <b>
@@ -1540,6 +2328,454 @@ As currently implemented, any nodes that are connected to both source and target
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="onNodeClick"></a>
+                    <span class="name">
+                        <b>
+                            onNodeClick
+                        </b>
+                        <a href="#onNodeClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNodeClick(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>handler for when a entity node is clicked.
+proxies to synthetic event &quot;entityClick&quot;</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeContextClick"></a>
+                    <span class="name">
+                        <b>
+                            onNodeContextClick
+                        </b>
+                        <a href="#onNodeContextClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNodeContextClick(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>handler for when a entity node is right clicked.
+proxies to synthetic event &quot;contextMenuClick&quot;</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onNodeDblClick"></a>
+                    <span class="name">
+                        <b>
+                            onNodeDblClick
+                        </b>
+                        <a href="#onNodeDblClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onNodeDblClick(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>handler for when a entity node is double clicked.
+proxies to synthetic event &quot;entityDblClick&quot;</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRightClick"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            onRightClick
+                        </b>
+                        <a href="#onRightClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onRightClick(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>nulls out the browser right click menu</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reload"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            reload
+                        </b>
+                        <a href="#reload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reload()</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>re-render if already loaded </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeNode"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            removeNode
+                        </b>
+                        <a href="#removeNode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeNode(entityId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Remove a node and store its state on deck.
+Any nodes that are no longer connected to any anchor nodes are removed in a cascade.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entityId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The ID of the node being removed</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="render"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            render
+                        </b>
+                        <a href="#render"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>render(gdata: <a href="../interfaces/SzNetworkGraphInputs.html">SzNetworkGraphInputs</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>main render lifecycle method </p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>gdata</td>
+                                    <td>
+                                                <code><a href="../interfaces/SzNetworkGraphInputs.html" target="_self" >SzNetworkGraphInputs</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="tick"></a>
                     <span class="name">
                         <b>
@@ -1582,6 +2818,45 @@ Not called when D3&#39;s forces reach equilibrium</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="chart"></a>
+                        <span class="name">
+                            <b>
+                            chart</b>
+                            <a href="#chart"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entityId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            entityId</b>
+                            <a href="#entityId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="forceSimulation"></a>
                         <span class="name">
                             <b>
@@ -1593,6 +2868,28 @@ Not called when D3&#39;s forces reach equilibrium</p>
                     <tr>
                         <td class="col-md-4">
                             <i>Type : </i>    <code>Simulation&lt;NodeInfo | LinkInfo&gt;</code>
+
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="graphData"></a>
+                        <span class="name">
+                            <b>
+                            graphData</b>
+                            <a href="#graphData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                         </td>
                     </tr>
@@ -1655,6 +2952,50 @@ Not called when D3&#39;s forces reach equilibrium</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="isD3"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isD3</b>
+                            <a href="#isD3"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isKeyLines"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isKeyLines</b>
+                            <a href="#isKeyLines"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="link"></a>
                         <span class="name">
                             <b>
@@ -1664,6 +3005,12 @@ Not called when D3&#39;s forces reach equilibrium</p>
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>main D3 selection for relationship lines </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1703,6 +3050,34 @@ Not called when D3&#39;s forces reach equilibrium</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="MIN_RECORD_ID_LENGTH"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Static</span>
+                            MIN_RECORD_ID_LENGTH</b>
+                            <a href="#MIN_RECORD_ID_LENGTH"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>3</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="node"></a>
                         <span class="name">
                             <b>
@@ -1712,6 +3087,12 @@ Not called when D3&#39;s forces reach equilibrium</p>
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>main D3 selection entity nodes </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1727,6 +3108,160 @@ Not called when D3&#39;s forces reach equilibrium</p>
                         </span>
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>text names that appear under entity nodes </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="renderComplete"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            renderComplete</b>
+                            <a href="#renderComplete"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;boolean&gt;</code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Observeable stream for the event that occurs when a draw
+operation is completed</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="requestComplete"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            requestComplete</b>
+                            <a href="#requestComplete"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;boolean&gt;</code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Observeable stream for the event that occurs when a network
+request is completed</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="requestNoResults"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            requestNoResults</b>
+                            <a href="#requestNoResults"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;boolean&gt;</code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Observeable stream for the event that occurs when a
+request completed but has no results</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="requestStarted"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            requestStarted</b>
+                            <a href="#requestStarted"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Observable&lt;boolean&gt;</code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Observeable stream for the event that occurs when a network
+request is initiated</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="SOURCE_LINE_CHAR_LIMIT"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Static</span>
+                            SOURCE_LINE_CHAR_LIMIT</b>
+                            <a href="#SOURCE_LINE_CHAR_LIMIT"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>27</code>
+                        </td>
+                    </tr>
 
 
             </tbody>
@@ -1753,6 +3288,12 @@ Not called when D3&#39;s forces reach equilibrium</p>
                         </td>
                     </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>svg element </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1771,11 +3312,386 @@ Not called when D3&#39;s forces reach equilibrium</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>SVGSVGElement</code>
+                            <i>Type : </i>    <code>SVGElement</code>
 
                         </td>
                     </tr>
 
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltip"></a>
+                        <span class="name">
+                            <b>
+                            tooltip</b>
+                            <a href="#tooltip"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;tooltip&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip element, child element of container with absolute pos  </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltipContainer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            tooltipContainer</b>
+                            <a href="#tooltipContainer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;tooltipContainer&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip container element </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipData</b>
+                            <a href="#toolTipData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>TooltipEntityModel | TooltipLinkModel</code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>data used to populate tooltip template, switched ref to either &quot;toolTipEntData&quot; or &quot;toolTipLinkData&quot; </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipEntData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipEntData</b>
+                            <a href="#toolTipEntData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/TooltipEntityModel.html" target="_self" >TooltipEntityModel</a></code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip data for entity hover </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltipEntTemplate"></a>
+                        <span class="name">
+                            <b>
+                            tooltipEntTemplate</b>
+                            <a href="#tooltipEntTemplate"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;ttEnt&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip entity template </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipLinkData"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipLinkData</b>
+                            <a href="#toolTipLinkData"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/TooltipLinkModel.html" target="_self" >TooltipLinkModel</a></code>
+
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip daata for entity relationship links </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltipLinkTemplate"></a>
+                        <span class="name">
+                            <b>
+                            tooltipLinkTemplate</b>
+                            <a href="#tooltipLinkTemplate"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;ttLink&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>relationship link tooltip template </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipPosLeft"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipPosLeft</b>
+                            <a href="#toolTipPosLeft"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>position of tooltip left relative to graph canvas </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipPosTop"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipPosTop</b>
+                            <a href="#toolTipPosTop"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>position of tooltip top relative to graph canvas </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tooltipShowing"></a>
+                        <span class="name">
+                            <b>
+                            tooltipShowing</b>
+                            <a href="#tooltipShowing"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>whethor or not to show the tooltip </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="toolTipTemplate"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            toolTipTemplate</b>
+                            <a href="#toolTipTemplate"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.tooltipEntTemplate</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>tooltip template switchable ref </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="unsubscribe$"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            unsubscribe$</b>
+                            <a href="#unsubscribe$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Subject&lt;void&gt;()</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>subscription to notify subscribers to unbind </p>
+</div>
+                    </td>
+                </tr>
 
             </tbody>
         </table>
@@ -1860,6 +3776,56 @@ Not called when D3&#39;s forces reach equilibrium</p>
                                                             <td>
                                                                             <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
                                                             </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadedData"></a>
+                        <span class="name"><b>loadedData</b><a href="#loadedData"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>loadedData(value)</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>value</td>
+                                                    
                                                     
                                                         <td>
                                                                 No
@@ -2020,22 +3986,20 @@ used to set aspect ratio, centering etc for dynamic scaling.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="forceXYContinuous"></a>
-                        <span class="name"><b>forceXYContinuous</b><a href="#forceXYContinuous"><span class="icon ion-ios-link"></span></a></span>
+                        <a name="fixDraggedNodes"></a>
+                        <span class="name"><b>fixDraggedNodes</b><a href="#fixDraggedNodes"><span class="icon ion-ios-link"></span></a></span>
                     </td>
                 </tr>
 
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>forceXYContinuous(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                        <span class="accessor"><b>set</b><code>fixDraggedNodes(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-description"><p>sets whether or not to force XY gravity and node repulsion
-even after drag repositioning. IE node &quot;snaps&quot; back in to place
-after drag-end.</p>
+                                <div class="io-description"><p>sets whether or not to fix nodes in place after dragging.</p>
 </div>
 
                                 <div class="io-description">
@@ -2138,7 +4102,7 @@ after drag-end.</p>
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>maxDegrees(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code></span>
+                        <span class="accessor"><b>set</b><code>maxDegrees(value)</code></span>
                     </td>
                 </tr>
                     <tr>
@@ -2150,7 +4114,6 @@ after drag-end.</p>
                                             <thead>
                                                 <tr>
                                                     <td>Name</td>
-                                                        <td>Type</td>
                                                     <td>Optional</td>
                                                 </tr>
                                             </thead>
@@ -2158,9 +4121,6 @@ after drag-end.</p>
                                                     <tr>
                                                             <td>value</td>
                                                     
-                                                            <td>
-                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                                            </td>
                                                     
                                                         <td>
                                                                 No
@@ -2192,7 +4152,7 @@ after drag-end.</p>
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>buildOut(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code></span>
+                        <span class="accessor"><b>set</b><code>buildOut(value)</code></span>
                     </td>
                 </tr>
                     <tr>
@@ -2204,7 +4164,6 @@ after drag-end.</p>
                                             <thead>
                                                 <tr>
                                                     <td>Name</td>
-                                                        <td>Type</td>
                                                     <td>Optional</td>
                                                 </tr>
                                             </thead>
@@ -2212,9 +4171,6 @@ after drag-end.</p>
                                                     <tr>
                                                             <td>value</td>
                                                     
-                                                            <td>
-                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                                            </td>
                                                     
                                                         <td>
                                                                 No
@@ -2246,7 +4202,7 @@ after drag-end.</p>
 
                 <tr>
                     <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>maxEntities(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code></span>
+                        <span class="accessor"><b>set</b><code>maxEntities(value)</code></span>
                     </td>
                 </tr>
                     <tr>
@@ -2258,7 +4214,6 @@ after drag-end.</p>
                                             <thead>
                                                 <tr>
                                                     <td>Name</td>
-                                                        <td>Type</td>
                                                     <td>Optional</td>
                                                 </tr>
                                             </thead>
@@ -2266,9 +4221,6 @@ after drag-end.</p>
                                                     <tr>
                                                             <td>value</td>
                                                     
-                                                            <td>
-                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                                            </td>
                                                     
                                                         <td>
                                                                 No
@@ -2396,6 +4348,237 @@ after drag-end.</p>
                     </tr>
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filter"></a>
+                        <span class="name"><b>filter</b><a href="#filter"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>filter()</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>get the filters that are being applied to nodes.</p>
+</div>
+
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="../interfaces/NodeFilterPair.html" target="_self" >[] | NodeFilterPair</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>filter(fn)</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>set the filters to apply to the display of nodes in graph. The default is to hide any
+nodes that return true when the selectorFn is called on the node.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>fn</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="highlight"></a>
+                        <span class="name"><b>highlight</b><a href="#highlight"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>highlight(fn)</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>set a style or effect to apply to the display of nodes in graph that match any
+of the criteria set by &quot;&quot;.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>fn</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                        <b>Example :</b>
+                                            <div>
+                                                <pre class="line-numbers"><code class="language-html">SzRelationshipNetworkComponent.highlight = {selectorFn: (node) =&amp;gt; { return node.dataSources.indexOf(&amp;#39;MY DATASOURCE&amp;#39;) &amp;gt; -1; }, modifierFn: (nodeList) =&amp;gt; { nodeList.style(&amp;#39;fill&amp;#39;,&amp;#39;orange&amp;#39;); }}</code></pre>
+                                            </div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="modify"></a>
+                        <span class="name"><b>modify</b><a href="#modify"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>modify(fn)</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>set or update a property on nodes in graph that match any
+of the criteria set by &quot;&quot;.</p>
+</div>
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>fn</td>
+                                                    
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                        <b>Example :</b>
+                                            <div>
+                                                <pre class="line-numbers"><code class="language-html">SzRelationshipNetworkComponent.modify = {selectorFn: (node) =&amp;gt; { return node.dataSources.indexOf(&amp;#39;MY DATASOURCE&amp;#39;) &amp;gt; -1; }, modifierFn: (data) =&amp;gt; { data.newProperty = true; return data; } }</code></pre>
+                                            </div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="chartNodes"></a>
+                        <span class="name"><b>chartNodes</b><a href="#chartNodes"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>chartNodes()</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>the node or main selection </p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="chartData"></a>
+                        <span class="name"><b>chartData</b><a href="#chartData"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>chartData()</code></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-description"><p>the data for the nodes in this.chartNodes </p>
+</div>
+
+                        </td>
+                    </tr>
+
+            </tbody>
+        </table>
 </section>
 </div>
 
@@ -2403,10 +4586,105 @@ after drag-end.</p>
 
     <div class="tab-pane fade " id="c-templateData">
         <pre class="line-numbers"><code class="language-html">
-  &lt;svg data-html2canvas-ignore #graphEle class&#x3D;&quot;graph-chart&quot;
-  [attr.viewBox]&#x3D;&quot;this.svgViewBox&quot;
-  [attr.preserveAspectRatio]&#x3D;&quot;this.svgPreserveAspectRatio&quot;
-  &gt;&lt;/svg&gt;
+  &lt;div id&#x3D;&quot;kl-chart-container&quot; class&#x3D;&quot;chart-container&quot;&gt;
+    &lt;div id&#x3D;&quot;tooltip-container&quot; #tooltipContainer
+    class&#x3D;&quot;tooltip-container&quot;&gt;
+      &lt;div #tooltip id&#x3D;&quot;tooltip&quot;
+      [style.top]&#x3D;&quot;toolTipPosTop+&#x27;px&#x27;&quot;
+      [style.left]&#x3D;&quot;toolTipPosLeft+&#x27;px&#x27;&quot;
+      [style.opacity]&#x3D;&quot; this.tooltipShowing ? 1 : 0&quot;
+      class&#x3D;&quot;tooltip&quot;&gt;
+        &lt;ng-container *ngTemplateOutlet&#x3D;&quot;toolTipTemplate;context:toolTipData&quot;&gt;&lt;/ng-container&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- chart --&gt;
+    &lt;svg data-html2canvas-ignore #graphEle class&#x3D;&quot;graph-chart&quot;
+    [attr.viewBox]&#x3D;&quot;this.svgViewBox&quot;
+    [attr.preserveAspectRatio]&#x3D;&quot;this.svgPreserveAspectRatio&quot;
+    (contextmenu)&#x3D;&quot;onRightClick($event)&quot;
+    &gt;&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div id&#x3D;&quot;moreParent&quot;&gt;
+    &lt;div id&#x3D;&quot;moreContainer&quot;&gt;
+      &lt;script id&#x3D;&quot;tt_html&quot; type&#x3D;&quot;text/html&quot;&gt;
+        &lt;div id&#x3D;&quot;tooltip&quot; style&#x3D;&quot;display: none; position: absolute; min-width: 70px; pointer-events: none;&quot;
+             class&#x3D;&quot;popover right&quot;&gt;
+          &lt;div class&#x3D;&quot;arrow&quot;&gt;&lt;/div&gt;
+          &lt;h2 class&#x3D;&quot;popover-title&quot;&gt;&lt;strong&gt;{{label}}&lt;/strong&gt;&lt;/h2&gt;
+          &lt;div class&#x3D;&quot;popover-content&quot;&gt;
+            &lt;table class&#x3D;&quot;table-condensed&quot;&gt;
+              &lt;tbody&gt;
+              &lt;tr&gt;
+                &lt;td style&#x3D;&quot;text-align: right;&quot;&gt;&lt;strong&gt;Gender&lt;/strong&gt;&lt;/td&gt;
+                &lt;td&gt;{{gender}}&lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr&gt;
+                &lt;td style&#x3D;&quot;text-align: right;&quot;&gt;&lt;strong&gt;Name&lt;/strong&gt;&lt;/td&gt;
+                &lt;td&gt;{{name}}&lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr&gt;
+                &lt;td style&#x3D;&quot;text-align: right;&quot;&gt;&lt;strong&gt;Surname&lt;/strong&gt;&lt;/td&gt;
+                &lt;td&gt;{{surname}}&lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/script&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id&#x3D;&quot;lazyScripts&quot;&gt;
+  &lt;/div&gt;
+  &lt;!-- template for link --&gt;
+  &lt;ng-template #ttLink
+  let-matchKey&#x3D;&quot;matchKey&quot;&gt;
+      &lt;div&gt;{{matchKey}}&lt;/div&gt;
+  &lt;/ng-template&gt;
+  &lt;!-- template for entity --&gt;
+  &lt;ng-template #ttEnt
+  let-label&#x3D;&quot;label&quot;
+  let-id&#x3D;&quot;id&quot;
+  let-orgName&#x3D;&quot;orgName&quot;
+  let-name&#x3D;&quot;name&quot;
+  let-gender&#x3D;&quot;gender&quot;
+  let-address&#x3D;&quot;address&quot;
+  let-phone&#x3D;&quot;phone&quot;
+  let-sources&#x3D;&quot;sources&quot;
+  let-sourcesString&#x3D;&quot;sourcesString&quot;&gt;
+      &lt;div&gt;
+          &lt;div class&#x3D;&quot;arrow&quot;&gt;&lt;/div&gt;
+          &lt;h2 class&#x3D;&quot;popover-title&quot;&gt;&lt;strong&gt;{{ label }}&lt;/strong&gt;&lt;/h2&gt;
+          &lt;div class&#x3D;&quot;popover-content&quot;&gt;
+            &lt;table class&#x3D;&quot;table-condensed&quot;&gt;
+              &lt;tbody&gt;
+              &lt;tr&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Entity_ID&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{id}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;tr&gt;
+                &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Sources&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;
+                    &lt;table&gt;
+                      &lt;tbody&gt;
+                          &lt;tr *ngFor&#x3D;&quot;let source of sources&quot;&gt;
+                            &lt;td&gt;{{source}}&lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/tbody&gt;
+                    &lt;/table&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+              &lt;tr *ngIf&#x3D;&quot;orgName&quot;&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Name&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{orgName}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;tr *ngIf&#x3D;&quot;!orgName &amp;&amp; name&quot;&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Name&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{name}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;tr *ngIf&#x3D;&quot;gender&quot;&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Gender&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{gender}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;tr *ngIf&#x3D;&quot;address&quot;&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Address&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{address}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;tr *ngIf&#x3D;&quot;phone&quot;&gt; &lt;td class&#x3D;&quot;tooltip-info-type&quot;&gt;&lt;strong&gt;Phone&lt;/strong&gt;&lt;/td&gt; &lt;td&gt;{{phone}}&lt;/td&gt; &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+  &lt;/ng-template&gt;
+
+    &lt;!--&lt;svg data-html2canvas-ignore #graphEle class&#x3D;&quot;graph-chart&quot;--&gt;
+    &lt;!--[attr.viewBox]&#x3D;&quot;this.svgViewBox&quot;--&gt;
+    &lt;!--[attr.preserveAspectRatio]&#x3D;&quot;this.svgPreserveAspectRatio&quot;--&gt;
+    &lt;!--&amp;gt;&lt;/svg&gt;--&gt;
 </code></pre>
     </div>
 
@@ -2438,7 +4716,7 @@ after drag-end.</p>
   stroke-width: 2px;
 }
 
-.sz-graph-icon-enclosure {
+.sz-graph-icon-enclosure, .sz-graph-business-icon-enclosure {
   fill: white;
 }
 
@@ -2459,6 +4737,29 @@ div.sz-graph-tooltip {
   width: 100%;
   height: 100%;
 
+  .chart-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    kl-components {
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      kl-component {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .kl-chart {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   svg {
     display: inline-block;
     width: 100%;
@@ -2468,6 +4769,44 @@ div.sz-graph-tooltip {
       stroke: #999;
       stroke-width: 2px;
     }
+  }
+
+  .tooltip-container {
+    /* position container relative to flow */
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 0;
+    overflow: visible;
+
+    /* position actual tooltip node absolute
+      to container. that way tooltip can use
+      absolute positioning, relative to the place
+      that the container is located.
+    */
+    .tooltip {
+      font-size: var(--sz-graph-tooltip-font-size);
+      background-color:  var(--sz-graph-tooltip-background-color);
+      position: absolute;
+      z-index: 5000;
+      padding: 1px;
+      border-radius: var(--sz-graph-tooltip-border-radius);
+      border: var(--sz-graph-tooltip-border);
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s linear;
+
+      .popover-title {
+        margin: 0 4px 10px 0;
+        font-size: var(--sz-graph-tooltip-font-size);
+      }
+    }
+  }
+
+  #tooltip, .tooltip {
+    border: var(--sz-graph-tooltip-border);
+    padding: var(--sz-graph-tooltip-padding);
   }
 }
 </code></pre>
@@ -2481,7 +4820,7 @@ div.sz-graph-tooltip {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div>  <svg data-html2canvas-ignore #graphEle class="graph-chart"  [attr.viewBox]="this.svgViewBox"  [attr.preserveAspectRatio]="this.svgPreserveAspectRatio"  ></svg></div>'
+        var COMPONENT_TEMPLATE = '<div>  <div id="kl-chart-container" class="chart-container">    <div id="tooltip-container" #tooltipContainer    class="tooltip-container">      <div #tooltip id="tooltip"      [style.top]="toolTipPosTop+\'px\'"      [style.left]="toolTipPosLeft+\'px\'"      [style.opacity]=" this.tooltipShowing ? 1 : 0"      class="tooltip">        <ng-container *ngTemplateOutlet="toolTipTemplate;context:toolTipData"></ng-container>      </div>    </div>    <!-- chart -->    <svg data-html2canvas-ignore #graphEle class="graph-chart"    [attr.viewBox]="this.svgViewBox"    [attr.preserveAspectRatio]="this.svgPreserveAspectRatio"    (contextmenu)="onRightClick($event)"    ></svg>  </div>  <div id="moreParent">    <div id="moreContainer">      <script id="tt_html" type="text/html">        <div id="tooltip" style="display: none; position: absolute; min-width: 70px; pointer-events: none;"             class="popover right">          <div class="arrow"></div>          <h2 class="popover-title"><strong>{{label}}</strong></h2>          <div class="popover-content">            <table class="table-condensed">              <tbody>              <tr>                <td style="text-align: right;"><strong>Gender</strong></td>                <td>{{gender}}</td>              </tr>              <tr>                <td style="text-align: right;"><strong>Name</strong></td>                <td>{{name}}</td>              </tr>              <tr>                <td style="text-align: right;"><strong>Surname</strong></td>                <td>{{surname}}</td>              </tr>              </tbody>            </table>          </div>        </div>      </script>    </div>  </div>  <div id="lazyScripts">  </div>  <!-- template for link -->  <ng-template #ttLink  let-matchKey="matchKey">      <div>{{matchKey}}</div>  </ng-template>  <!-- template for entity -->  <ng-template #ttEnt  let-label="label"  let-id="id"  let-orgName="orgName"  let-name="name"  let-gender="gender"  let-address="address"  let-phone="phone"  let-sources="sources"  let-sourcesString="sourcesString">      <div>          <div class="arrow"></div>          <h2 class="popover-title"><strong>{{ label }}</strong></h2>          <div class="popover-content">            <table class="table-condensed">              <tbody>              <tr> <td class="tooltip-info-type"><strong>Entity_ID</strong></td> <td>{{id}}</td> </tr>              <tr>                <td class="tooltip-info-type"><strong>Sources</strong></td><td>                    <table>                      <tbody>                          <tr *ngFor="let source of sources">                            <td>{{source}}</td>                          </tr>                      </tbody>                    </table>                </td>              </tr>              <tr *ngIf="orgName"> <td class="tooltip-info-type"><strong>Name</strong></td> <td>{{orgName}}</td> </tr>              <tr *ngIf="!orgName && name"> <td class="tooltip-info-type"><strong>Name</strong></td> <td>{{name}}</td> </tr>              <tr *ngIf="gender"> <td class="tooltip-info-type"><strong>Gender</strong></td> <td>{{gender}}</td> </tr>              <tr *ngIf="address"> <td class="tooltip-info-type"><strong>Address</strong></td> <td>{{address}}</td> </tr>              <tr *ngIf="phone"> <td class="tooltip-info-type"><strong>Phone</strong></td> <td>{{phone}}</td> </tr>              </tbody>            </table>          </div>        </div>  </ng-template>    <!--<svg data-html2canvas-ignore #graphEle class="graph-chart"-->    <!--[attr.viewBox]="this.svgViewBox"-->    <!--[attr.preserveAspectRatio]="this.svgPreserveAspectRatio"-->    <!--&gt;</svg>--></div>'
     var COMPONENTS = [{'name': 'SzGraphTestComponent', 'selector': 'sz-graph-test-component'},{'name': 'SzRelationshipNetworkComponent', 'selector': 'sz-relationship-network'},{'name': 'SzRelationshipNetworkInputComponent', 'selector': 'sz-relationship-network-input'},{'name': 'SzRelationshipNetworkLookupComponent', 'selector': 'sz-relationship-network-lookup'},{'name': 'SzRelationshipNetworkUploadComponent', 'selector': 'sz-relationship-network-upload'},{'name': 'SzRelationshipPathComponent', 'selector': 'sz-relationship-path'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SzRelationshipNetworkComponent'};
@@ -2520,6 +4859,7 @@ div.sz-graph-tooltip {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
             var COMPODOC_CURRENT_PAGE_URL = 'SzRelationshipNetworkComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
