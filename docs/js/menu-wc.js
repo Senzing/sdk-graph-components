@@ -65,9 +65,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="components-links"' : 'id="xs-components-links"' }>
                             <li class="link">
-                                <a href="components/SzGraphTestComponent.html" data-type="entity-link">SzGraphTestComponent</a>
-                            </li>
-                            <li class="link">
                                 <a href="components/SzRelationshipNetworkComponent.html" data-type="entity-link">SzRelationshipNetworkComponent</a>
                             </li>
                             <li class="link">
@@ -94,9 +91,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
                                     <a href="injectables/SzGraphConfigurationService.html" data-type="entity-link">SzGraphConfigurationService</a>
-                                </li>
-                                <li class="link">
-                                    <a href="injectables/SzGraphTestService.html" data-type="entity-link">SzGraphTestService</a>
                                 </li>
                             </ul>
                         </li>
