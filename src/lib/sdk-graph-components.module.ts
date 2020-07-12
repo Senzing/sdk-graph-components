@@ -13,11 +13,9 @@ import {
 //import { SzEntitySearchParams } from './models/entity-search';
 
 /** services */
-import { SzGraphTestService } from './services/graph-test.service';
 import { SzGraphConfigurationService } from './services/graph-configuration.service';
 
 /** components */
-import { SzGraphTestComponent } from './graph-test/graph-test.component';
 import { SzRelationshipNetworkComponent, NodeFilterPair } from './graph/sz-relationship-network/sz-relationship-network.component';
 import { SzRelationshipNetworkInputComponent } from './graph/sz-relationship-network-input/sz-relationship-network-input.component';
 import { SzRelationshipNetworkLookupComponent } from './graph/sz-relationship-network-lookup/sz-relationship-network-lookup.component';
@@ -47,7 +45,6 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
 
 @NgModule({
   declarations: [
-    SzGraphTestComponent,
     SzRelationshipNetworkComponent,
     SzRelationshipNetworkInputComponent,
     SzRelationshipNetworkLookupComponent,
@@ -62,7 +59,6 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
     ApiModule
   ],
   providers: [
-    SzGraphTestService,
     SzGraphConfigurationService
   ],
   /** for components being exported as web components */
@@ -71,7 +67,6 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
     SzRelationshipPathComponent
   ],
   exports: [
-    SzGraphTestComponent,
     SzRelationshipNetworkComponent,
     SzRelationshipNetworkInputComponent,
     SzRelationshipNetworkLookupComponent,

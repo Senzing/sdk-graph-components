@@ -16,7 +16,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
         <nav>
             <ul class="list">
                 <li class="title">
-                    <a href="index.html" data-type="index-link">Senzing SDK Graph Components</a>
+                    <a href="index.html" data-type="index-link">sdk-graph-components documentation</a>
                 </li>
 
                 <li class="divider"></li>
@@ -32,6 +32,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <li class="link">
                             <a href="index.html" data-type="chapter-link">
                                 <span class="icon ion-ios-paper"></span>README
+                            </a>
+                        </li>
+                        <li class="link">
+                            <a href="changelog.html"  data-type="chapter-link">
+                                <span class="icon ion-ios-paper"></span>CHANGELOG
+                            </a>
+                        </li>
+                        <li class="link">
+                            <a href="contributing.html"  data-type="chapter-link">
+                                <span class="icon ion-ios-paper"></span>CONTRIBUTING
                             </a>
                         </li>
                         <li class="link">
@@ -54,9 +64,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="components-links"' : 'id="xs-components-links"' }>
-                            <li class="link">
-                                <a href="components/SzGraphTestComponent.html" data-type="entity-link">SzGraphTestComponent</a>
-                            </li>
                             <li class="link">
                                 <a href="components/SzRelationshipNetworkComponent.html" data-type="entity-link">SzRelationshipNetworkComponent</a>
                             </li>
@@ -83,7 +90,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
-                                    <a href="injectables/SzGraphTestService.html" data-type="entity-link">SzGraphTestService</a>
+                                    <a href="injectables/SzGraphConfigurationService.html" data-type="entity-link">SzGraphConfigurationService</a>
                                 </li>
                             </ul>
                         </li>
@@ -100,6 +107,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/LinkInfo.html" data-type="entity-link">LinkInfo</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/NodeFilterPair.html" data-type="entity-link">NodeFilterPair</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/NodeInfo.html" data-type="entity-link">NodeInfo</a>
@@ -127,6 +137,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/SzSearchResultEntityData.html" data-type="entity-link">SzSearchResultEntityData</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/TooltipEntityModel.html" data-type="entity-link">TooltipEntityModel</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/TooltipLinkModel.html" data-type="entity-link">TooltipLinkModel</a>
                             </li>
                         </ul>
                     </li>
