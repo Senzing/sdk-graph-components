@@ -75,7 +75,7 @@ export function SzDefaultRestConfigurationFactory(): SzRestConfiguration {
   ]
 })
 export class SenzingSdkGraphModule {
-  public static forRoot(apiConfigFactory?: () => SzRestConfiguration): ModuleWithProviders {
+  public static forRoot(apiConfigFactory?: () => SzRestConfiguration): ModuleWithProviders<SenzingSdkGraphModule> {
     return {
         ngModule: SenzingSdkGraphModule,
         providers: [
