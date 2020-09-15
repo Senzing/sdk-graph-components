@@ -699,7 +699,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   }
 
   /** re-render if already loaded */
-  public reload(): void {
+  public reload(entityIds?: string | number | number[]): void {
+    if(entityIds && entityIds !== undefined) {
+      this.entityIds = entityIds;
+    }
+    
     //console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
     if(this.svg && this.svg.selectAll) {
       this.svg.selectAll('*').remove();
