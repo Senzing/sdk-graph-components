@@ -623,11 +623,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   /** make network request and populate svg */
   ngAfterViewInit() {
     // get dom element reference to svg tag
-    console.warn('SzRelationshipNetworkComponent.ngAfterViewInit: what kind of element is svgComponent? ', this.svgComponent);
+    // console.warn('SzRelationshipNetworkComponent.ngAfterViewInit: what kind of element is svgComponent? ', this.svgComponent);
     this.svgElement = (this.svgComponent.nativeElement as SVGSVGElement);
 
     if (this._entityIds === undefined || this._entityIds.length === 0) {
-      console.log("No EntityIDs passed in to " + this);
+      console.warn("SzRelationshipNetworkComponent.ngAfterViewInit: No EntityIDs passed in to " + this);
       return;
     }
 
