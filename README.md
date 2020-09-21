@@ -7,7 +7,7 @@
 
 ## Overview
 
-This project is for the Senzing&reg; Graph SDK components that can be used in other projects using Angular 7.X.X.
+This project is for the Senzing&reg; Graph SDK components that can be used in other projects using Angular 10.X.X.
 It is built off of the venerable D3 graphing framework.
 
 ### Installation
