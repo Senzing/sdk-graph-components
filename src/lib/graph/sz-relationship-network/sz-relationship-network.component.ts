@@ -140,10 +140,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   public isD3 = true;
 
   /** svg element */
-  @ViewChild('graphEle') svgComponent;
+  @ViewChild('graphEle', {static: false}) svgComponent: ElementRef;
   public svgElement: SVGElement;
   /** tooltip container element */
-  @ViewChild('tooltipContainer')
+  @ViewChild('tooltipContainer', {static: false})
   public tooltipContainer: ElementRef;
   /** tooltip entity template */
   @ViewChild('ttEnt') tooltipEntTemplate;
@@ -480,7 +480,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * nodes that return true when the selectorFn is called on the node.
    */
   @Input() public set filter(fn: NodeFilterPair[] | NodeFilterPair) {
-    if((fn as NodeFilterPair).selectorFn) {
+    if((fn as NodeFilterPair) && (fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
@@ -506,7 +506,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * SzRelationshipNetworkComponent.highlight = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (nodeList) => { nodeList.style('fill','orange'); }}
    */
   @Input() public set highlight(fn: NodeFilterPair[] | NodeFilterPair) {
-    if((fn as NodeFilterPair).selectorFn) {
+    if((fn as NodeFilterPair) && (fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
@@ -525,7 +525,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
    * SzRelationshipNetworkComponent.modify = {selectorFn: (node) => { return node.dataSources.indexOf('MY DATASOURCE') > -1; }, modifierFn: (data) => { data.newProperty = true; return data; } }
    */
   @Input() public set modify(fn: NodeFilterPair[] | NodeFilterPair) {
-    if((fn as NodeFilterPair).selectorFn) {
+    if((fn as NodeFilterPair) && (fn as NodeFilterPair).selectorFn) {
       // is single pair, save as single item array
       fn = [ (fn as NodeFilterPair) ];
     }
@@ -606,17 +606,31 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   }
 
   ngOnInit() {
+    // !!!! logic moved to ngAfterViewInit
+    // !!!! as of NG10 ViewChild(Ref) is no longer available at 
+    // !!!! time of view init
+    /*
     // get dom element reference to svg tag
+    console.warn('what kind of element is svgComponent? ', this.svgComponent);
     this.svgElement = (this.svgComponent.nativeElement as SVGSVGElement);
 
     if (this._entityIds === undefined || this._entityIds.length === 0) {
       console.log("No EntityIDs passed in to " + this);
       return;
-    }
+    } */
   }
 
   /** make network request and populate svg */
   ngAfterViewInit() {
+    // get dom element reference to svg tag
+    // console.warn('SzRelationshipNetworkComponent.ngAfterViewInit: what kind of element is svgComponent? ', this.svgComponent);
+    this.svgElement = (this.svgComponent.nativeElement as SVGSVGElement);
+
+    if (this._entityIds === undefined || this._entityIds.length === 0) {
+      console.warn("SzRelationshipNetworkComponent.ngAfterViewInit: No EntityIDs passed in to " + this);
+      return;
+    }
+
     if(this._entityIds) {
       this.getNetwork().pipe(
         takeUntil(this.unsubscribe$),
@@ -685,7 +699,11 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   }
 
   /** re-render if already loaded */
-  public reload(): void {
+  public reload(entityIds?: string | number | number[]): void {
+    if(entityIds && entityIds !== undefined) {
+      this.entityIds = entityIds;
+    }
+    
     //console.warn('@senzing/sdk-graph-components/sz-relationship-network.reload(): ', this._entityIds);
     if(this.svg && this.svg.selectAll) {
       this.svg.selectAll('*').remove();
@@ -720,6 +738,10 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** render svg elements from graph data */
   addSvg(gdata: SzNetworkGraphInputs, parentSelection = d3.select("body")) {
+    if(!this.svgElement) {
+      console.warn('PANIC AT THE DISCO!! no svg element found!!!', this.svgElement );
+      return;
+    }
     const graph = this.asGraph( gdata );
     const tooltip = parentSelection
       .append("div")
