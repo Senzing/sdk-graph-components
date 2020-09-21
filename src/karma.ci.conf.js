@@ -20,8 +20,8 @@ module.exports = function (config) {
       clearContext: false
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../coverage'),
-      reports: ['html', 'lcovonly'],
+      dir: require('path').join(__dirname, '../coverage/senzing/sdk-graph-components'),
+      reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
     reporters: ['brief'],

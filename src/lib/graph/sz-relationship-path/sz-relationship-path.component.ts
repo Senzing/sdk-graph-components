@@ -1,16 +1,19 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Simulation } from 'd3-force';
 import { Graph, LinkInfo, NodeInfo } from '../sz-relationship-network/graph-types';
 import { EntityGraphService } from '@senzing/rest-api-client-ng';
 import { map } from 'rxjs/operators';
 import * as d3 from 'd3';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'sz-relationship-path',
   templateUrl: './sz-relationship-path.component.html',
   styleUrls: ['./sz-relationship-path.component.scss']
 })
-export class SzRelationshipPathComponent implements OnInit {
+export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
+  /** subscription to notify subscribers to unbind */
+  public unsubscribe$ = new Subject<void>();
 
   static readonly ICONS = {
     business: null, // TODO replace the business .png with SVG
@@ -33,7 +36,8 @@ export class SzRelationshipPathComponent implements OnInit {
     }
   };
 
-  @ViewChild('graphEle') svgComponent;
+  /** svg element */
+  @ViewChild('graphEle', {static: false}) svgComponent: ElementRef;
   public svgElement: SVGSVGElement;
 
   private _svgWidth: number;
@@ -90,11 +94,14 @@ export class SzRelationshipPathComponent implements OnInit {
   constructor(
     private graphService: EntityGraphService,
   ) {
-    console.log("Constructing Relationship Path");
     this.linkedByNodeIndexMap = {};
   }
 
   ngOnInit() {
+    // !!!! logic moved to ngAfterViewInit
+    // !!!! as of NG10 ViewChild(Ref) is no longer available at 
+    // !!!! time of view init
+    /*
     // get dom element reference to svg tag
     this.svgElement = (this.svgComponent.nativeElement as SVGSVGElement);
 
@@ -104,6 +111,23 @@ export class SzRelationshipPathComponent implements OnInit {
       return;
     }
     console.log("Making calls!");
+    this.getPath().pipe(
+      map(SzRelationshipPathComponent.asGraph),
+    ).subscribe( this.addSvg.bind(this) );
+    */
+  }
+
+  ngAfterViewInit() {
+    // get dom element reference to svg tag
+    // console.warn('SzRelationshipPathComponent.ngAfterViewInit: what kind of element is svgComponent? ', this.svgComponent);
+    this.svgElement = (this.svgComponent.nativeElement as SVGSVGElement);
+
+    if (this.from === undefined || this.from.length === 0 ||
+        this.to === undefined || this.to.length === 0) {
+      console.warn("SzRelationshipPathComponent.ngAfterViewInit: No EntityIDs passed in to " + this);
+      return;
+    }
+    // console.log("Making calls!");
     this.getPath().pipe(
       map(SzRelationshipPathComponent.asGraph),
     ).subscribe( this.addSvg.bind(this) );
