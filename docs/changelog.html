@@ -35,25 +35,55 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
 <a href="https://dlaa.me/markdownlint/">markdownlint</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="unreleased">[Unreleased]</h2>
+<h2 id="210---2020-9-21">[2.1.0] - 2020-9-21</h2>
+<p>Maintenence release for framework upgrade to Angular 10: see <a href="https://blog.angular.io/version-10-of-angular-now-available-78960babd41">https://blog.angular.io/version-10-of-angular-now-available-78960babd41</a></p>
+<p>Major updates to most dependency versions have also been made which should improve file sizes, security, and stability.</p>
+<p>The following Senzing projects have also been updated to operate on Angular 10,
+see the following links for associated tickets:</p>
 <ul>
-<li>Thing 5</li>
-<li>Thing 4</li>
+<li><a href="https://github.com/Senzing/sdk-components-ng/issues/143">sdk-components-ng/issues/143</a></li>
+<li><a href="https://github.com/Senzing/rest-api-client-ng/issues/39">rest-api-client-ng/issues/39</a></li>
+<li><a href="https://github.com/Senzing/sdk-graph-components/issues/37">sdk-graph-components/issues/37</a></li>
 </ul>
-<h2 id="101---yyyy-mm-dd">[1.0.1] - yyyy-mm-dd</h2>
-<h3 id="added-to-101">Added to 1.0.1</h3>
+<h2 id="011---2020-7-13">[0.1.1] - 2020-7-13</h2>
+<p>addresses issue #32</p>
+<h2 id="010---2019-11-11">[0.1.0] - 2019-11-11</h2>
+<p>addresses issues #18 #19 #21 #23 </p>
 <ul>
-<li>Thing 3</li>
+<li>Added &quot;loadedData&quot; method for agnostic method parity</li>
+<li>Added filtering and color highlighting methods for SzRelationshipNetworkComponent </li>
+<li>Added compatibility changes needed to support different graph frameworks agnosticaly.</li>
+<li>Various compatibility fixes</li>
 </ul>
-<h3 id="fixed-in-101">Fixed in 1.0.1</h3>
+<h2 id="006---2019-9-8">[0.0.6] - 2019-9-8</h2>
+<p>addresses tickets: #6 #12 #14 #16 </p>
 <ul>
-<li>Thing 2</li>
+<li>added SzGraphConfigurationService so that components had a way to change the graph api config through service methods. (same way sdk-components-ng handles it&#39;s config injection)</li>
+<li>graph can now reload when parameters change via a <em>reload</em> method</li>
+<li>added new lifecycle events: requestStarted, requestComplete, renderComplete</li>
+<li>added new behavior events: noResults,  loading, rendered</li>
+<li>add event emitters for: contextMenuClick, entityClick, entityDblClick</li>
 </ul>
-<h2 id="100---yyyy-mm-dd">[1.0.0] - yyyy-mm-dd</h2>
-<h3 id="added-to-100">Added to 1.0.0</h3>
+<h2 id="004---2019-8-3">[0.0.4] - 2019-8-3</h2>
+<p>minor release. addresses issues #7 #4 #2 </p>
 <ul>
-<li>Thing 2</li>
-<li>Thing 1</li>
+<li>graph node event emitters for binding to node hover, click, right click</li>
+<li>graph node overflow issue</li>
+<li>dynamically allow show/hide of link labels on &quot;showLinkLabels&quot; setter change</li>
+</ul>
+<h2 id="002---2019-7-17">[0.0.2] - 2019-7-17</h2>
+<p>fix for network graph nodes being pushed outside of bounding box.</p>
+<h2 id="001---2019-7-11">[0.0.1] - 2019-7-11</h2>
+<p>Initial release.</p>
+<p><img src="https://user-images.githubusercontent.com/13721038/61072740-c7a86780-a3c8-11e9-8db8-fa81eb799e47.png" alt="2019-07-11_104342" class="img-responsive"></p>
+<ul>
+<li>split the graph components out from the main SDK lib</li>
+<li>verified components work</li>
+<li>verified tests work</li>
+<li>added README, LICENSE, docs</li>
+<li>added all relevant tooling to generate npm packages from source</li>
+<li>added tooling to build docs from source</li>
+<li>added travis-ci configuration for automated tests</li>
 </ul>
 
 
