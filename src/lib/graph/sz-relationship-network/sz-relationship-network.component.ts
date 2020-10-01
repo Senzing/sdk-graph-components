@@ -667,7 +667,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         this._maxDegrees,
         this._buildOut,
         this._maxEntities,
-        SzFeatureMode.NONE,
+        SzFeatureMode.REPRESENTATIVE,
         true,
         false,
         false,
@@ -984,10 +984,15 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   }
 
   static nodeTooltipText(d) {
-    return "<strong>Entity ID</strong>: " + d.entityId +
-      "<br/><strong>Name</strong>: " + d.name +
-      "<br/><strong>Address</strong>: " + d.address +
-      "<br/><strong>Phone</strong>: " + d.phone;
+    let retVal = "<strong>Entity ID</strong>: " + d.entityId +
+      "<br/><strong>Name</strong>: " + d.name;
+    if(d.address && d.address !== null) {
+      retVal += "<br/><strong>Address</strong>: " + d.address;
+    }
+    if(d.phone && d.phone !== null) {
+      retVal += "<br/><strong>Phone</strong>: " + d.phone;
+    }
+    return retVal;
   }
 
   isConnected(a, b) {
