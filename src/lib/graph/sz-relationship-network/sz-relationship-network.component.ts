@@ -379,7 +379,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
           });
           if ( _filtered && pairFn && pairFn.modifierFn && pairFn.modifierFn.call) {
             // first change opacity on ALL items
-            _filtered.style('opacity', 0);
+            _filtered.style('display', 'none');
             // now apply special filter highlighter
             pairFn.modifierFn(_filtered);
             const _nodePaths = _filtered.select('path');
@@ -387,7 +387,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
               pairFn.modifierFn(_nodePaths);
             }
           } else if (_filtered && pairFn && !pairFn.modifierFn) {
-            _filtered.style('opacity', 0);
+            _filtered.style('display', 'none');
           }
         });
 
@@ -399,22 +399,44 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
           });
           if(_linksToHide && _linksToHide.style) {
             try {
-              _linksToHide.style('opacity', 0);
+              _linksToHide.style('display', 'none');
             } catch(err) {}
           }
         }
         // hide any related match keys
-        //console.warn('filter match keys? ', _excludedIds, this.linkLabel);
+        // console.warn('filter match keys? ', _excludedIds);
         if(_excludedIds && this.link && this.linkLabel.filter ) {
           const _linksToHide = this.linkLabel.filter( (lNode) => {
             return (_excludedIds.indexOf( lNode.source.entityId ) >= 0 || _excludedIds.indexOf( lNode.target.entityId ) >= 0);
           });
           if(_linksToHide && _linksToHide.style) {
             try {
-              _linksToHide.style('opacity', 0);
+              _linksToHide.style('display', 'none');
             } catch(err) {}
           }
         }
+
+        // unfilter nodes not in filtered results
+        if(this.node && this.node.filter) {
+          let _unfilteredNodes = this.node.filter( (nodeData) => {
+            return _excludedIds.indexOf( nodeData.entityId ) < 0;
+          });
+          _unfilteredNodes.style("display", 'block');
+        }
+        if(this.link && this.link.filter) {
+          let _unfilteredLinks = this.link.filter( (lNode) => {
+            return _excludedIds.indexOf( lNode.source.entityId ) < 0 && _excludedIds.indexOf( lNode.target.entityId ) < 0;
+          });
+          _unfilteredLinks.style("display", 'block');
+          console.info('need to NOT show when dest is also in filtered entities!: ['+ _excludedIds.join(', ') +'] ', _unfilteredLinks, this.link);
+        }
+        if(this.linkLabel && this.linkLabel.filter) {
+          let _unfilteredLinkLabels = this.linkLabel.filter( (lNode) => {
+            return _excludedIds.indexOf( lNode.source.entityId ) < 0;
+          });
+          _unfilteredLinkLabels.style("display", 'block');
+        }
+
         // --- end D3 filter
       }
     }
