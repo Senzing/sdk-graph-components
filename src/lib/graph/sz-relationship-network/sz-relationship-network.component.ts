@@ -428,7 +428,6 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
             return _excludedIds.indexOf( lNode.source.entityId ) < 0 && _excludedIds.indexOf( lNode.target.entityId ) < 0;
           });
           _unfilteredLinks.style("display", 'block');
-          console.info('need to NOT show when dest is also in filtered entities!: ['+ _excludedIds.join(', ') +'] ', _unfilteredLinks, this.link);
         }
         if(this.linkLabel && this.linkLabel.filter) {
           let _unfilteredLinkLabels = this.linkLabel.filter( (lNode) => {
@@ -689,7 +688,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
         this._maxDegrees,
         this._buildOut,
         this._maxEntities,
-        SzFeatureMode.NONE,
+        SzFeatureMode.REPRESENTATIVE,
         true,
         false,
         false,
@@ -701,7 +700,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
 
   /** main render lifecycle method */
   public render(gdata: SzNetworkGraphInputs) {
-    console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
+    //console.log('@senzing/sdk-graph-components/sz-relationship-network.render(): ', gdata, this._filterFn);
     this.loadedData = gdata;
     this.addSvg(gdata);
     // publish out event
@@ -1006,10 +1005,15 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   }
 
   static nodeTooltipText(d) {
-    return "<strong>Entity ID</strong>: " + d.entityId +
-      "<br/><strong>Name</strong>: " + d.name +
-      "<br/><strong>Address</strong>: " + d.address +
-      "<br/><strong>Phone</strong>: " + d.phone;
+    let retVal = "<strong>Entity ID</strong>: " + d.entityId +
+      "<br/><strong>Name</strong>: " + d.name;
+    if(d.address && d.address !== null) {
+      retVal += "<br/><strong>Address</strong>: " + d.address;
+    }
+    if(d.phone && d.phone !== null) {
+      retVal += "<br/><strong>Phone</strong>: " + d.phone;
+    }
+    return retVal;
   }
 
   isConnected(a, b) {
