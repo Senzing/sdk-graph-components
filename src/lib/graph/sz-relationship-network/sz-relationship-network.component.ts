@@ -251,11 +251,16 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
   /** @internal */
   private _entityIds: string[];
 
+  /** whether or not to re-draw on id change */
+  @Input() public reloadOnIdChange = false;
+
   /**
    * Set the entityIds of the src entities to do discovery search around.
    */
   @Input() set entityIds(value: string | number | number[]) {
     let _changed = false;
+    let _oldIds  = this._entityIds;
+
     if(value && typeof value === 'string') {
       if(value && value.indexOf(',')) {
         // string array
@@ -274,6 +279,9 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
       // the only other thing it could be is number[]
       _changed = this._entityIds != value.toString().split(',');
       this._entityIds = value.toString().split(',');
+    }
+    if(this.reloadOnIdChange && this._entityIds.some( (eId) => { return _oldIds.indexOf(eId) < 0;})) {
+      this.reload( this._entityIds.map((eId) => { return parseInt(eId); }) );
     }
     // console.log('sdk-graph-components/sz-relationship-network.component: entityIds setter( '+_changed+' )', this._entityIds);
   }
