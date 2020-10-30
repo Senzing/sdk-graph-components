@@ -7,7 +7,7 @@
   "peerDependencies": {
     "@angular/common": "^10.0.14",
     "@angular/core": "^10.0.14",
-    "@senzing/rest-api-client-ng": "^2.1.1",
+    "@senzing/rest-api-client-ng": "^2.2.0",
     "@types/d3": "^5.7.2",
     "d3": "^5.9.1"
   }

@@ -420,6 +420,9 @@
                                 <a href="#modify">modify</a>
                             </li>
                             <li>
+                                <a href="#reloadOnIdChange">reloadOnIdChange</a>
+                            </li>
+                            <li>
                                 <a href="#showLinkLabels">showLinkLabels</a>
                             </li>
                             <li>
@@ -776,6 +779,27 @@ of the criteria set by &quot;&quot;.</p>
                     <td class="col-md-4">
                         <div class="io-description"><p>set or update a property on nodes in graph that match any
 of the criteria set by &quot;&quot;.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="reloadOnIdChange"></a>
+                        <b>reloadOnIdChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>whether or not to re-draw on id change </p>
 </div>
                     </td>
                 </tr>
@@ -4729,7 +4753,16 @@ of the criteria set by &quot;&quot;.</p>
                 <p class="comment">
                     <code>./sz-relationship-network.component.scss</code>
                 </p>
-                <pre class="line-numbers"><code class="language-scss">
+                <pre class="line-numbers"><code class="language-scss">:host {
+  &amp;.not-showing-link-labels {
+    ::ng-deep svg.graph-chart {
+      .sz-graph-link-label {
+        opacity: 0;
+      }
+    }
+  }
+}
+
 .sz-graph-node {
   font-size: 12px;
 }
