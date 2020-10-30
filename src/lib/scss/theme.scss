@@ -3,7 +3,7 @@
 
 body {
   /* all component styles */
-  --sz-font-family: $sz-font-family;
+  --sz-font-family: #{$sz-font-family};
   --sz-color-matches: #{$sz-dark-blue};
   --sz-color-possible-match: #{$sz-green};
   --sz-color-possibly-related: #{$sz-brown};
