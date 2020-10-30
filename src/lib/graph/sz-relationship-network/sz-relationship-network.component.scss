@@ -1,4 +1,5 @@
 :host {
+  font-family: var(--sz-font-family);
   &.not-showing-link-labels {
     ::ng-deep svg.graph-chart {
       .sz-graph-link-label {
