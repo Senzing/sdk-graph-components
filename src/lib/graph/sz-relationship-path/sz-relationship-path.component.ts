@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { Simulation } from 'd3-force';
 import { Graph, LinkInfo, NodeInfo } from '../sz-relationship-network/graph-types';
 import { EntityGraphService } from '@senzing/rest-api-client-ng';
@@ -16,7 +16,10 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
   public unsubscribe$ = new Subject<void>();
 
   static readonly ICONS = {
-    business: null, // TODO replace the business .png with SVG
+    business: {
+      shape: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z",
+      enclosed: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
+    }, // TODO replace the business .png with SVG
     userFemale: {
       // The outline of the face and shoulders for the female icon
       shape: "M687.543 599.771c-29.257 73.143-95.086 124.343-175.543 124.343s-146.286-51.2-175.543-117.029c-146.286 36.571-256 146.286-256 277.943v95.086h870.4v-95.086c0-138.971-117.029-248.686-263.314-285.257zM768 592.457c0 0-51.2-299.886-65.829-365.714-14.629-87.771-95.086-160.914-197.486-160.914-95.086 0-182.857 65.829-197.486 160.914-7.314 51.2-73.143 329.143-80.457 343.771 0 0 7.314 14.629 95.086-14.629 7.314 0 43.886-14.629 51.2-14.629 36.571 51.2 80.457 80.457 138.971 80.457 51.2 0 102.4-29.257 138.971-87.771 29.257 14.629 14.629 36.571 117.029 58.514zM512 599.771c-43.886 0-80.457-21.943-109.714-65.829v0c0 0-7.314-7.314-7.314-7.314s0 0 0 0-7.314-7.314-7.314-14.629c0 0 0 0 0 0 0-7.314-7.314-7.314-7.314-14.629 0 0 0 0 0 0 0-7.314-7.314-7.314-7.314-14.629 0 0 0 0 0 0-7.314 0-7.314-7.314-7.314-7.314s0 0 0 0c0-7.314 0-7.314-7.314-14.629 0 0 0 0 0 0 0-7.314 0-7.314-7.314-14.629 0 0 0 0 0 0 0-7.314 0-7.314 0-14.629 0 0 0-7.314-7.314-7.314-7.314-7.314-14.629-21.943-14.629-43.886s7.314-43.886 14.629-51.2c0 0 7.314 0 7.314-7.314 14.629 14.629 7.314-7.314 7.314-21.943 0-43.886 0-51.2 0-58.514 29.257-21.943 80.457-51.2 117.029-51.2 0 0 0 0 0 0 43.886 0 51.2 14.629 73.143 36.571 14.629 29.257 43.886 51.2 109.714 51.2 0 0 0 0 7.314 0 0 0 0 14.629 0 29.257s0 43.886 7.314 14.629c0 0 0 0 7.314 7.314s14.629 21.943 14.629 51.2c0 21.943-7.314 36.571-21.943 43.886 0 0-7.314 7.314-7.314 7.314 0 7.314 0 7.314 0 14.629 0 0 0 0 0 0-7.314 7.314-7.314 7.314-7.314 14.629 0 0 0 0 0 0 0 7.314 0 7.314-7.314 14.629 0 0 0 0 0 0 0 7.314 0 7.314-7.314 14.629 0 0 0 0 0 0 0 7.314 0 7.314-7.314 14.629 0 0 0 0 0 0s-0 7.314-0 7.314c0 0 0 0 0 0 0 7.314-7.314 7.314-7.314 14.629 0 0 0 0 0 0s-7.314 7.314-7.314 7.314v0c-29.257 43.886-73.143 65.829-109.714 65.829z",
@@ -25,28 +28,87 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
     },
     userMale: {
       // The outline of the face and shoulders for the male icon
-      shape: "M687.543 299.886c7.314-21.943 14.629-43.886 14.629-65.829 0-102.4-87.771-190.171-197.486-190.171s-204.8 87.771-204.8 190.171c0 21.943 7.314 43.886 14.629 65.829-14.629 14.629-21.943 36.571-14.629 65.829 0 21.943 14.629 43.886 29.257 58.514 21.943 117.029 95.086 190.171 182.857 190.171s153.6-73.143 182.857-190.171c0-14.629 14.629-36.571 14.629-58.514 7.314-29.257 0-51.2-21.943-65.829zM687.543 365.714c0 21.943-7.314 36.571-21.943 43.886 0 0-7.314 7.314-7.314 7.314-14.629 102.4-80.457 175.543-153.6 175.543s-138.971-73.143-160.914-175.543c0 0 0-7.314-7.314-7.314-7.314-7.314-14.629-29.257-14.629-43.886 0-29.257 7.314-43.886 14.629-51.2 0 0 7.314-7.314 7.314-7.314 7.314 29.257 14.629 51.2 14.629 36.571 0-29.257-7.314-87.771-7.314-117.029 29.257-21.943 80.457-51.2 124.343-51.2 0 0 0 0 0 0 43.886 0 58.514 14.629 73.143 36.571 14.629 29.257 36.571 51.2 109.714 51.2 0 0 0 0 7.314 0-7.314 29.257-7.314 58.514-7.314 80.457 0 14.629 7.314-7.314 14.629-36.571 0 0 0 0 7.314 7.314 0 7.314 14.629 21.943 7.314 51.2zM680.229 592.457c-29.257 65.829-95.086 117.029-175.543 117.029s-146.286-51.2-175.543-124.343c-146.286 36.571-256 153.6-256 292.571v95.086h877.714v-95.086c0-138.971-117.029-256-270.629-285.257z",
+      shape: "M256 48C148.5 48 60.1 129.5 49.2 234.1c-.8 7.2-1.2 14.5-1.2 21.9 0 7.4.4 14.7 1.2 21.9C60.1 382.5 148.5 464 256 464c114.9 0 208-93.1 208-208S370.9 48 256 48zm135.8 326.1c-22.7-8.6-59.5-21.2-82.4-28-2.4-.7-2.7-.9-2.7-10.7 0-8.1 3.3-16.3 6.6-23.3 3.6-7.5 7.7-20.2 9.2-31.6 4.2-4.9 10-14.5 13.6-32.9 3.2-16.2 1.7-22.1-.4-27.6-.2-.6-.5-1.2-.6-1.7-.8-3.8.3-23.5 3.1-38.8 1.9-10.5-.5-32.8-14.9-51.3-9.1-11.7-26.6-26-58.5-28h-17.5c-31.4 2-48.8 16.3-58 28-14.5 18.5-16.9 40.8-15 51.3 2.8 15.3 3.9 35 3.1 38.8-.2.7-.4 1.2-.6 1.8-2.1 5.5-3.7 11.4-.4 27.6 3.7 18.4 9.4 28 13.6 32.9 1.5 11.4 5.7 24 9.2 31.6 2.6 5.5 3.8 13 3.8 23.6 0 9.9-.4 10-2.6 10.7-23.7 7-58.9 19.4-80 27.8C91.6 341.4 76 299.9 76 256c0-48.1 18.7-93.3 52.7-127.3S207.9 76 256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256c0 43.9-15.6 85.4-44.2 118.1z",
       // The space enclosed by the face of the male icon
-      enclosed: "M687.543 365.714c0 21.943-7.314 36.571-21.943 43.886 0 0-7.314 7.314-7.314 7.314-14.629 102.4-80.457 175.543-153.6 175.543s-138.971-73.143-160.914-175.543c0 0 0-7.314-7.314-7.314-7.314-7.314-14.629-29.257-14.629-43.886 0-29.257 7.314-43.886 14.629-51.2 0 0 7.314-7.314 7.314-7.314 7.314 29.257 14.629 51.2 14.629 36.571 0-29.257-7.314-87.771-7.314-117.029 29.257-21.943 80.457-51.2 124.343-51.2 0 0 0 0 0 0 43.886 0 58.514 14.629 73.143 36.571 14.629 29.257 36.571 51.2 109.714 51.2 0 0 0 0 7.314 0-7.314 29.257-7.314 58.514-7.314 80.457 0 14.629 7.314-7.314 14.629-36.571 0 0 0 0 7.314 7.314 0 7.314 14.629 21.943 7.314 51.2zM680.229 592.457c-29.257 65.829-95.086 117.029-175.543 117.029s-146.286-51.2-175.543-124.343c-146.286 36.571-256 153.6-256 292.571v95.086h877.714v-95.086c0-138.971-117.029-256-270.629-285.257z"
+      enclosed: "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
     },
     // TODO introduce a gender-neutral person icon for when we can tell a node is a person but the gender isn't specified.
     default: {
-      // A Question Mark
-      shape: "M343.771 124.343c43.886-29.257 102.4-43.886 175.543-43.886 87.771 0 160.914 21.943 226.743 65.829 58.514 43.886 87.771 109.714 87.771 190.171 0 51.2-14.629 95.086-36.571 131.657-14.629 21.943-43.886 51.2-87.771 80.457l-51.2 36.571c-21.943 14.629-36.571 36.571-43.886 58.514 0 14.629-7.314 36.571-7.314 73.143h-160.914c0-65.829 7.314-117.029 21.943-138.971 7.314-29.257 36.571-58.514 80.457-87.771l36.571-36.571c14.629-7.314 29.257-21.943 36.571-36.571 14.629-21.943 21.943-43.886 21.943-73.143s-7.314-58.514-29.257-80.457c-14.629-21.943-43.886-36.571-87.771-36.571s-80.457 14.629-95.086 43.886c-21.943 29.257-36.571 65.829-36.571 95.086h-168.229c0-109.714 43.886-190.171 117.029-241.371zM446.171 797.257h175.543v175.543h-175.543v-175.543z",
+      shape: "M256 48C148.5 48 60.1 129.5 49.2 234.1c-.8 7.2-1.2 14.5-1.2 21.9 0 7.4.4 14.7 1.2 21.9C60.1 382.5 148.5 464 256 464c114.9 0 208-93.1 208-208S370.9 48 256 48zm135.8 326.1c-22.7-8.6-59.5-21.2-82.4-28-2.4-.7-2.7-.9-2.7-10.7 0-8.1 3.3-16.3 6.6-23.3 3.6-7.5 7.7-20.2 9.2-31.6 4.2-4.9 10-14.5 13.6-32.9 3.2-16.2 1.7-22.1-.4-27.6-.2-.6-.5-1.2-.6-1.7-.8-3.8.3-23.5 3.1-38.8 1.9-10.5-.5-32.8-14.9-51.3-9.1-11.7-26.6-26-58.5-28h-17.5c-31.4 2-48.8 16.3-58 28-14.5 18.5-16.9 40.8-15 51.3 2.8 15.3 3.9 35 3.1 38.8-.2.7-.4 1.2-.6 1.8-2.1 5.5-3.7 11.4-.4 27.6 3.7 18.4 9.4 28 13.6 32.9 1.5 11.4 5.7 24 9.2 31.6 2.6 5.5 3.8 13 3.8 23.6 0 9.9-.4 10-2.6 10.7-23.7 7-58.9 19.4-80 27.8C91.6 341.4 76 299.9 76 256c0-48.1 18.7-93.3 52.7-127.3S207.9 76 256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256c0 43.9-15.6 85.4-44.2 118.1z",
+      enclosed: "M256 76c48.1 0 93.3 18.7 127.3 52.7S436 207.9 436 256s-18.7 93.3-52.7 127.3S304.1 436 256 436c-48.1 0-93.3-18.7-127.3-52.7S76 304.1 76 256s18.7-93.3 52.7-127.3S207.9 76 256 76m0-28C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
     }
   };
 
   /** svg element */
   @ViewChild('graphEle', {static: false}) svgComponent: ElementRef;
-  public svgElement: SVGSVGElement;
+  public svgElement: SVGElement;
 
-  private _svgWidth: number;
-  @Input() public set svgWidth(value: number) { this._svgWidth = +value; }
-  public get svgWidth(): number { return this._svgWidth; }
+  // assigned during render phase to D3 selector groups
+  private svg: any;
+  private linkGroup: any;
 
-  private _svgHeight: number;
-  @Input() public set svgHeight(value: number) { this._svgHeight = +value; }
-  public get svgHeight(): number { return this._svgHeight; }
+  /**
+   * arbitrary value just for drawing
+   * @internal
+   */
+  private _statWidth: number = 800;
+  /**
+   * sets the width of the component
+   */
+  @HostBinding('style.width.px')@Input() svgWidth;
+
+  /**
+   * arbitrary value just for drawing
+   * @internal
+   */
+  private _statHeight: number = 400;
+  /**
+   * sets the height attribute of the svg.
+   * @deprecated svg is always 100% of parent dom elements height
+   */
+  @HostBinding('style.height.px')@Input() svgHeight: string;
+
+  /**
+   * this matches up with the "_statWidth" and "_statHeight" to
+   * content centering and dynamic scaling properties.
+   * @internal
+  */
+  private _svgViewBox: string = '150 50 400 300';
+  /**
+   * sets the viewBox attribute on the svg element.
+  */
+  @Input() public set svgViewBox(value: string) { this._svgViewBox = value; }
+  /**
+   * gets the viewBox attribute on the svg element.
+   */
+  public get svgViewBox() { return this._svgViewBox; }
+
+  /**
+   * the preserveAspectRatio attribute on the svg element.
+   * @interal
+   */
+  private _preserveAspectRatio: string = "xMidYMid meet";
+   /**
+   * sets the preserveAspectRatio attribute on the svg element.
+   * used to set aspect ratio, centering etc for dynamic scaling.
+   */
+  @Input() public set svgPreserveAspectRatio(value: string) { this._preserveAspectRatio = value; }
+  /**
+   * gets the preserveAspectRatio attribute on the svg element.
+   */
+  public get svgPreserveAspectRatio() { return this._preserveAspectRatio; }
+
+  private _fixDraggedNodes: boolean = true;
+  /**
+   * sets whether or not to fix nodes in place after dragging.
+   */
+  @Input() public set fixDraggedNodes(value: boolean) { this._fixDraggedNodes = value; }
+
+  /**
+   * the space between nodes
+   */
+  private _linkGravity = 8;
+  @Input() public set linkGravity(value: number) { this._linkGravity = value; }
 
 
   private _port: number;
@@ -65,12 +127,18 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
   }
 
   private _from: string;
-  @Input() public set from(value: string) { this._from = value; }
-  public get from(): string { return this._from; }
+  @Input() public set from(value: string | any) { 
+    this._from = (value as any).toString();
+    console.log('SzRelationshipPathComponent.from = ', value, this._from);
+  }
+  public get from(): string | any { return this._from; }
 
   private _to: string;
-  @Input() public set to(value: string) { this._to = value; }
-  public get to(): string { return this._to; }
+  @Input() public set to(value: string | any) { 
+    this._to = (value as any).toString(); 
+    console.log('SzRelationshipPathComponent.to = ', value, this._to);
+  }
+  public get to(): string | any { return this._to; }
 
   private _maxDegrees: number;
   @Input() set maxDegrees(value: string) { this._maxDegrees = +value; }
@@ -136,8 +204,8 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
 
   private getPath() {
     return this.graphService.findEntityPath(
-      { id: this._from },
-      { id: this._to },
+      this._from,
+      this._to,
       this._maxDegrees,
       this._excludeIds,
       undefined,
@@ -159,7 +227,7 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
 
 
     // Add the SVG to the HTML body
-    const svg = d3.select( this.svgElement );
+    this.svg = d3.select( this.svgElement );
 
     /*
  * If you're unfamiliar with selectors acting like a join (starting in d3.v4), here's where things may be confusing.
@@ -174,7 +242,7 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
  */
 
     // Add link groups (line + label)
-    const linkGroup = svg.selectAll('.sz-graph-link')
+    const linkGroup = this.svg.selectAll('.sz-graph-link')
       .data(graph.links)
       .enter();
 
@@ -199,38 +267,80 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
 
     // Add Nodes.  Adding the nodes after the links is important, because svg doesn't have a z axis.  Later elements are
     //   drawn on top of earlier elements.
-    this.node = svg.selectAll('.sz-graph-node')
+    console.log('the fuck? ', graph.nodes, graph);
+    this.node = this.svg.selectAll('.sz-graph-node')
       .data(graph.nodes)
       .enter().append('g')
       .attr('class', 'sz-graph-node');
-
+    /*
     // Add an SVG icon for the person's face.  This hides the links so they're not visible through the face.
     this.node.filter(d => d.iconType !== "business" && SzRelationshipPathComponent.ICONS[d.iconType])
       .append('path')
       .attr('class', 'sz-graph-icon-enclosure')
       .attr('d', d => SzRelationshipPathComponent.ICONS[d.iconType]["enclosed"])
-      .attr("transform", "translate(-25,-28) scale(0.05)");
+      .attr("transform", "translate(-25,-28) scale(0.05)");*/
+
+    // Add an SVG circle for the person's face.  This hides the links so they're not visible through the face.
+    this.node.filter(d => d.iconType !== "business" && SzRelationshipPathComponent.ICONS[d.iconType])
+      //.append('path')
+      .append('circle')
+      .attr('class', function(d) {
+        return ['sz-graph-icon-enclosure'].concat(d.relationTypeClasses).join(' ');
+      })
+      .attr("cx", 0)
+      .attr("cy", 0)
+      .attr("r", 15);
+
+    //.attr('d', d => SzRelationshipNetworkComponent.ICONS[d.iconType]["enclosed"])
+    //.attr("transform", "translate(-20,-20) scale(.080)");
 
     // Add an SVG icon for the person.
     this.node.filter(d => d.iconType !== "business")
       .append('path')
-      .attr('class', 'sz-graph-node-icon')
-      .attr('fill', "#000000")
+      .attr('class', function(d) {
+        return ['sz-graph-node-icon'].concat(d.relationTypeClasses).join(' ');
+      })
+      .attr('fill', d => d.isQueriedNode ? "#000000" : d.isCoreNode ? '#999999' : '#DDDDDD')
       .attr("d", d => SzRelationshipPathComponent.ICONS[d.iconType] ?
-        SzRelationshipPathComponent.ICONS[d.iconType]["shape"] :
-        SzRelationshipPathComponent.ICONS["default"]["shape"])
-      .attr("transform", "translate(-25,-28) scale(0.05)");
+                      SzRelationshipPathComponent.ICONS[d.iconType]["shape"] :
+                      SzRelationshipPathComponent.ICONS["default"]["shape"])
+      .attr("transform", "translate(-20,-20) scale(.080)");
 
-    // Add .png icons for businesses
-    // TODO replace .png business icon with SVG
+    // add svg mask for business so you cant click through the surface
+    // two rectangles that fill in the building path
     this.node.filter(d => d.iconType === "business")
-      .append('image')
-      .attr("xlink:href", "../img/icons8-building-50-queried.png")
-      .attr("x", -25)
-      .attr("y", -25)
-      .attr("height", 50)
-      .attr("width", 50)
-      .attr('class', 'sz-graph-icon sz-graph-queried-node');
+      .append('rect')
+      .attr('x', 2.03)
+      .attr('y', 3.048)
+      .attr('width', 9.898)
+      .attr('height', 17.939)
+      .attr('class', 'sz-graph-business-icon-enclosure')
+      .attr("transform", "translate(-20,-20) scale(1.4)");
+    this.node.filter(d => d.iconType === "business")
+      .append('rect')
+      .attr('x', 11.966)
+      .attr('y', 7.068)
+      .attr('width', 9.974)
+      .attr('height', 13.918)
+      .attr('class', 'sz-graph-business-icon-enclosure')
+      .attr("transform", "translate(-20,-20) scale(1.4)");
+
+    // Add svg icon for business (corps are not people)
+    this.node.filter(d => d.iconType === "business")
+    .append('path')
+    .attr('class', function(d) {
+      return ['sz-graph-node-icon'].concat(d.relationTypeClasses).join(' ');
+    })
+    .attr('fill', d => d.isQueriedNode ? "#000000" : d.isCoreNode ? '#999999' : '#DDDDDD')
+    .attr("d", d => SzRelationshipPathComponent.ICONS[d.iconType] ?
+                    SzRelationshipPathComponent.ICONS[d.iconType]["shape"] :
+                    SzRelationshipPathComponent.ICONS["default"]["shape"])
+    .attr("transform", "translate(-20,-20) scale(1.4)");
+
+    this.node.each(d => {
+      d.x = this._statWidth / 2;
+      d.y = this._statHeight / 2;
+    });
 
     // Add node labels
     this.nodeLabel = this.node.append("svg:text")
@@ -256,13 +366,21 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
       .attr('class', "sz-graph-bbox");
 
     // Define the simulation with nodes, forces, and event listeners.
+    /*
     this.forceSimulation = d3.forceSimulation(graph.nodes)
       .force('link', d3.forceLink().links(graph.links).distance(this._svgWidth / 8)) // links pull nodes together
       .force('charge', d3.forceManyBody().strength(-100)) // nodes repel each other
       .force('center', d3.forceCenter(this._svgWidth / 2, this._svgHeight / 2)) // Make all nodes start near the center of the SVG
       .force('x', d3.forceX(this._svgWidth / 2).strength(0.01)) // x and y continually pull all nodes toward a point.  If the
       .force('y', d3.forceY(this._svgHeight / 2).strength(0.01)) //  graph has multiple networks, this keeps them on screen
-      .on('tick', this.tick.bind(this));
+      .on('tick', this.tick.bind(this));*/
+    
+    this.forceSimulation = d3.forceSimulation(graph.nodes)
+    .force('link', d3.forceLink().links(graph.links).distance(this._statWidth / this._linkGravity)) // links pull nodes together
+    .force('charge', d3.forceManyBody().strength(-30)) // nodes repel each other
+    .force('x', d3.forceX(this._statWidth / 2).strength(0.05)) // x and y continually pull all nodes toward a point.  If the
+    .force('y', d3.forceY(this._statHeight / 2).strength(0.05)) //  graph has multiple networks, this keeps them on screen
+    .on('tick', this.tick.bind(this));
 
     // Make the tooltip visible when mousing over nodes.  Fade out distant nodes
     this.node.on('mouseover.tooltip', function (d) {
@@ -378,6 +496,7 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
    */
   tick() {
     // Update the SVG for each .node
+    
     this.node.attr("transform", d => "translate(" + d.x + "," + d.y + ")")
       .call(d3.drag()             // TODO Update dragging code to use v5 conventions for event listening
         .on("start", this.dragstarted.bind(this))
@@ -522,22 +641,19 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
    * @param resolvedEntity The entity for the node being drawn.
    * @returns the key for the icon's SVG.
    */
-  private static getIconType(resolvedEntity) {
-    // Look for type information in the first 10 records.
-    const recordsArr = resolvedEntity["RECORDS"].slice(0, 9);
-    for (let i = 0; i < recordsArr.length; i++) {
-      const elem = recordsArr[i];
-      const data = elem["JSON_DATA"];
-      if (data) {
-        if (data["NAME_ORG"]) {
-          return 'business';
-        } else if (data["GENDER"] === 'FEMALE' || data["GENDER"] === 'F') {
-          return 'userFemale';
-        } else if (data["GENDER"] === 'MALE' || data["GENDER"] === 'M') {
-          return 'userMale';
+  static getIconType(resolvedEntity) {
+    let retVal = 'default';
+    if(resolvedEntity && resolvedEntity.records) {
+      resolvedEntity.records.slice(0, 9).forEach(element => {
+        if(element.nameOrg || (element.addressData && element.addressData.some((addr) => addr.indexOf('BUSINESS') > -1))) {
+          retVal = 'business';
+        } else if(element.gender && (element.gender === 'FEMALE' || element.gender === 'F') ) {
+          retVal = 'userFemale';
+        } else if(element.gender && (element.gender === 'MALE' || element.gender === 'M') ) {
+          retVal = 'userMale';
         }
-      }
+      });
     }
-    return 'default';
+    return retVal;
   }
 }
