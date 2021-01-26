@@ -127,18 +127,16 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
   }
 
   private _from: string;
-  @Input() public set from(value: string | any) { 
-    this._from = (value as any).toString();
-    console.log('SzRelationshipPathComponent.from = ', value, this._from);
+  @Input() public set from(value: string) { 
+    this._from = value;
   }
-  public get from(): string | any { return this._from; }
+  public get from(): string { return this._from; }
 
   private _to: string;
-  @Input() public set to(value: string | any) { 
-    this._to = (value as any).toString(); 
-    console.log('SzRelationshipPathComponent.to = ', value, this._to);
+  @Input() public set to(value: string) { 
+    this._to = value; 
   }
-  public get to(): string | any { return this._to; }
+  public get to(): string { return this._to; }
 
   private _maxDegrees: number;
   @Input() set maxDegrees(value: string) { this._maxDegrees = +value; }
@@ -267,7 +265,6 @@ export class SzRelationshipPathComponent implements OnInit, AfterViewInit {
 
     // Add Nodes.  Adding the nodes after the links is important, because svg doesn't have a z axis.  Later elements are
     //   drawn on top of earlier elements.
-    console.log('the fuck? ', graph.nodes, graph);
     this.node = this.svg.selectAll('.sz-graph-node')
       .data(graph.nodes)
       .enter().append('g')
