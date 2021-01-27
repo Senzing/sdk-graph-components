@@ -1222,9 +1222,9 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     // Add a node for each resolved entity
     entitiesData.forEach(entNode => {
       const resolvedEntity  = entNode.resolvedEntity;
-      const relatedEntRels  = entNode.relatedEntities.filter( (relEnt) => {
+      const relatedEntRels  = entNode.relatedEntities && entNode.relatedEntities.filter ? entNode.relatedEntities.filter( (relEnt) => {
         return primaryEntities ? primaryEntities.indexOf(relEnt.entityId) >= 0 : false;
-      } );
+      } ) : undefined;
 
       //console.log('SzRelationshipNetworkGraph.asGraph: ',
       //relatedEntRels, entNode.relatedEntities);
@@ -1266,7 +1266,7 @@ export class SzRelationshipNetworkComponent implements OnInit, AfterViewInit, On
     // Add links between resolved entities.
     entitiesData.forEach(entityInfo => {
       const entityId = entityInfo.resolvedEntity.entityId;
-      const relatedEntities = entityInfo.relatedEntities;
+      const relatedEntities = entityInfo.relatedEntities && entityInfo.relatedEntities.forEach ? entityInfo.relatedEntities : [];
       relatedEntities.forEach(relatedEntity => {
 
         const relatedEntityId = relatedEntity.entityId;
