@@ -1,8 +1,11 @@
 import { Injectable, Output, Input, Inject } from '@angular/core';
 import { Observable, fromEventPattern, Subject } from 'rxjs';
 import { map, tap, mapTo } from 'rxjs/operators';
-import { Configuration as SzRestConfiguration, ConfigurationParameters as SzRestConfigurationParameters } from '@senzing/rest-api-client-ng';
-
+import { 
+  Configuration as SzRestConfiguration, 
+  ConfigurationParameters as SzRestConfigurationParameters 
+} from '@senzing/rest-api-client-ng';
+/*
 import {
   EntityDataService,
   ConfigService,
@@ -11,13 +14,37 @@ import {
   SzAttributeTypesResponse,
   SzAttributeType,
   SzAttributeSearchResult
-} from '@senzing/rest-api-client-ng';
-import { SzEntitySearchParams } from '../models/entity-search';
+} from '@senzing/rest-api-client-ng';*/
+//import { SzEntitySearchParams } from '../models/entity-search';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SzGraphConfigurationService {
+  /** add an additional header to all outgoing API requests */
+  public addHeaderToApiRequests(header: {[key: string]: string}): void {
+    this.apiConfiguration.addAdditionalRequestHeader( header );
+  }
+  /** remove an additional header from all outgoing API requests */
+  public removeHeaderFromApiRequests(header: {[key: string]: string} | string): void {
+    this.apiConfiguration.removeAdditionalRequestHeader( header );
+  }
+  /** 
+   * additional http/https request headers that will be added by default to 
+   * all outbound api server requests.
+   */
+  public get additionalApiRequestHeaders(): {[key: string]: string} | undefined {
+    return this.apiConfiguration.additionalHeaders;
+  }
+  /** 
+   * set additional http/https request headers to be added by default to 
+   * all outbound api server requests. most commonly used for adding custom 
+   * or required non-standard headers like jwt session tokens, auth id etc.
+   */
+  public set additionalApiRequestHeaders(value: {[key: string]: string} | undefined) {
+    this.apiConfiguration.additionalHeaders = value;
+  }
+
   /**
    * emmitted when a property has been changed.
    * used mostly for diagnostics.
