@@ -6,7 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.3] - 2021-1-27
+## [2.2.0] - 2021-06-10
+
+- Dependency updates
+- Passing additional or custom headers are necessary in certain operation scenario's, ie: passing `X-Amz-Security-Token` to a [Cognito](https://aws.amazon.com/cognito/) enabled [API Gateway](https://aws.amazon.com/api-gateway/) address after user authentication.
+  - Methods added to SzGraphConfigurationService :
+    - addHeaderToApiRequests
+    - removeHeaderFromApiRequests
+  - Accessors added to SzGraphConfigurationService :
+    - additionalApiRequestHeaders
+
+relevant tickets: #70, #72
+
+## [2.1.3] - 2021-01-27
 
 - Bugfix for #56. There was a change to data models that changed the `relatedEntities` node from `[]` to omitted entirely when not present. The code needed to be updated to run safety checks to avoid script errors when an entity has no relationships.
 - Bugfix for #58. The **Find Path** component hadn't been kept up to date with the changes in the **Network Graph** and the api-server data model changes. 
